@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KelolaDataObatMasukController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::prefix('/kelola-data-obat-masuk')->name('kelola-data-obat-masuk.')->group(function() {
+    Route::group(['middleware' => ['auth']], function() {
+        Route::get('/create', [KelolaDataObatMasukController::class, 'create'])->name('create');
+        Route::post('/', [KelolaDataObatMasukController::class, 'store'])->name('store');
+        Route::put('/{kelolaDataObatMasuk}', [KelolaDataObatMasukController::class, 'update'])->name('update');
+        Route::delete('/{kelolaDataObatMasuk}', [KelolaDataObatMasukController::class, 'destroy'])->name('destroy');
+        Route::get('/{kelolaDataObatMasuk}/edit', [KelolaDataObatMasukController::class, 'edit'])->name('edit');
+        Route::get('/', [KelolaDataObatMasukController::class, 'index'])->name('index');
+    });
 });
 
 require __DIR__.'/auth.php';
