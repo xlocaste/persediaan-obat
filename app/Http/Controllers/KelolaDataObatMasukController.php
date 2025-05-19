@@ -7,6 +7,7 @@ use App\Http\Requests\KelolaDataObatMasuk\UpdateRequest;
 use App\Models\KelolaDataObatMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class KelolaDataObatMasukController extends Controller
@@ -53,6 +54,13 @@ class KelolaDataObatMasukController extends Controller
         ]);
 
         return Inertia::location(route('kelola-data-obat-masuk.index'));
+    }
+
+    public function destroy(KelolaDataObatMasuk $kelolaDataObatMasuk)
+    {
+        $kelolaDataObatMasuk->delete();
+
+        return Redirect::route('kelola-data-obat-masuk.index')->with('message', 'Data berhasil dihapus');
     }
 
     public function edit(KelolaDataObatMasuk $kelolaDataObatMasuk)
