@@ -1,7 +1,27 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 
 export default function Dashboard() {
+    const [time, setTime] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => setTime(new Date()), 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    const formattedDate = time.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+
+    const formattedTime = time.toLocaleTimeString('id-ID', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    });
     return (
         <AuthenticatedLayout
             header={
@@ -16,8 +36,13 @@ export default function Dashboard() {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-gradient-to-b from-indigo-700 via-indigo-500 to-indigo-400 text-white shadow-sm sm:rounded-lg">
                         <div className="p-6">
-                            <p className='font-bold text-xl'>Selamat Datang di Aplikasi SIPERO</p>
-                            <p>Sistem Persediaan Obat</p>
+                            <div className='flex justify-between'>
+                                <div className='bg-black/50 p-4 rounded-lg'>
+                                    <p className='font-bold text-xl'>Selamat Datang di Aplikasi SIPERO</p>
+                                    <p>Sistem Persediaan Obat</p>
+                                </div>
+                                <div className='flex items-center bg-black/50 px-8 rounded-lg font-bold text-xl'>{formattedTime}</div>
+                            </div>
                             <div className="flex justify-between gap-8 pt-4">
                                 <div className="md:w-1/2">
                                     <h2 className="text-xl font-semibold mb-3">Visi</h2>
