@@ -11,8 +11,8 @@ export default function List({ auth, KDOM }) {
             <Head title="Data Obat Masuk" />
 
             <div className="py-4 px-4 rounded-lg">
-                <div className="py-4 px-6 rounded-lg max-w-full overflow-x-auto bg-white">
-                    <div className='flex items-center justify-end p-4'>
+                <div className="py-4 px-4 rounded-lg max-w-full overflow-x-auto bg-white">
+                    <div className='flex items-center justify-end mb-4'>
                         <PrimaryButton>
                             <Link href={route('kelola-data-obat-masuk.create')}>
                                 + TAMBAH DATA OBAT MASUK

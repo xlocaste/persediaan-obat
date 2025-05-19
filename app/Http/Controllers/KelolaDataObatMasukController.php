@@ -38,6 +38,15 @@ class KelolaDataObatMasukController extends Controller
         return redirect()->route('kelola-data-obat-masuk.index');
     }
 
+    public function show($kelolaDataObatMasuk)
+    {
+        $kelolaDataObatMasuk = KelolaDataObatMasuk::findOrFail($kelolaDataObatMasuk);
+
+        return Inertia::render('KelolaDataObatMasuk/Detail', [
+            'KelolaDataObatMasuk' => $kelolaDataObatMasuk
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('KelolaDataObatMasuk/Add');
