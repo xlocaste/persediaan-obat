@@ -12,7 +12,7 @@ export default function AuthenticatedLayout({ header, children }) {
             <aside className="fixed h-screen w-64 bg-gradient-to-b from-indigo-700 via-indigo-500 to-indigo-400 text-white">
                 <div className="flex items-center justify-center px-4 py-4">
                     <Link href="/">
-                        <ApplicationLogo className="h-10 w-auto fill-current text-white" />
+                        <ApplicationLogo className="h-20 w-auto fill-current text-white" />
                     </Link>
                 </div>
 
@@ -68,15 +68,9 @@ export default function AuthenticatedLayout({ header, children }) {
                     </button>
 
                     {showDropdown && (
-                        <form method="POST" action={route('logout')}>
-                            <input type="hidden" name="_token" value={usePage().props.csrf_token} />
-                            <button
-                                type="submit"
-                                className="w-full text-left p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out"
-                            >
-                                Log Out
-                            </button>
-                        </form>
+                        <Link className="text-left p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out" href={route('logout')} method="post" as="button">
+                            <p>Log Out</p>
+                        </Link>
                     )}
                 </div>
             </aside>
