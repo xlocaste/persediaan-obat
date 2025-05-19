@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KelolaDataObatMasuk\StoreRequest;
+use App\Http\Requests\KelolaDataObatMasuk\UpdateRequest;
 use App\Models\KelolaDataObatMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,29 @@ class KelolaDataObatMasukController extends Controller
         ]);
 
         return redirect()->route('kelola-data-obat-masuk.index');
+    }
+
+    public function update(UpdateRequest $request, KelolaDataObatMasuk $kelolaDataObatMasuk)
+    {
+        $kelolaDataObatMasuk->update([
+            'id_penerimaan'    => $request->id_penerimaan,
+            'id_obat'          => $request->id_obat,
+            'id_distributor'   => $request->id_distributor,
+            'jumlah_masuk'     => $request->jumlah_masuk,
+            'tanggal_masuk'    => $request->tanggal_masuk,
+            'nama_distributor' => $request->nama_distributor,
+            'petugas_penerima' => $request->petugas_penerima,
+            'keterangan'       => $request->keterangan,
+        ]);
+
+        return Inertia::location(route('kelola-data-obat-masuk.index'));
+    }
+
+    public function edit(KelolaDataObatMasuk $kelolaDataObatMasuk)
+    {
+        return Inertia::render('KelolaDataObatMasuk/Update', [
+            'KelolaDataObatMasuk' => $kelolaDataObatMasuk
+        ]);
     }
 
     public function show($kelolaDataObatMasuk)

@@ -11,7 +11,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id_penerimaan'=> ['required', 'string', 'max:255'],
+            'id_obat'=> ['required', 'string', 'max:255'],
+            'id_distributor'=> ['required', 'string', 'max:255'],
+            'jumlah_masuk'=> ['required', 'integer', 'min:1'],
+            'tanggal_masuk'=> ['required', 'date'],
+            'nama_distributor'=> ['required', 'string', 'max:255'],
+            'petugas_penerima'=> ['required', 'string', 'max:255'],
+            'keterangan'=> ['nullable', 'string'],
         ];
     }
 }
