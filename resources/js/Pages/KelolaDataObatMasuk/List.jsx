@@ -1,5 +1,7 @@
+import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
+import { FaEye, FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 
 export default function List({ auth, KDOM }) {
     return (
@@ -9,57 +11,66 @@ export default function List({ auth, KDOM }) {
             <Head title="Data Obat Masuk" />
 
             <div className="py-4 px-4 rounded-lg">
-                <div className="bg-white shadow-sm rounded-lg overflow-hidden">
-                    <table className="min-w-full divide-gray-200 rounded-lg">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID Penerimaan</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID Obat</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID Distributor</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jumlah Masuk</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Masuk</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Distributor</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Petugas Penerima</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Keterangan</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-gray-200">
-                            {KDOM.data.map((item) => (
-                                <tr key={item.id}>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.id_penerimaan}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.id_obat}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.id_distributor}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.jumlah_masuk}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.tanggal_masuk}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.nama_distributor}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.petugas_penerima}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.keterangan}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 space-x-2">
-                                        <Link
-                                            href={route('kelola-obat-masuk.edit', item.id)}
-                                            className="inline-flex items-center px-3 py-1 bg-blue-500 text-white text-xs font-semibold rounded hover:bg-blue-600 transition duration-200"
-                                        >
-                                            Edit
-                                        </Link>
-                                        <Link
-                                            as="button"
-                                            method="delete"
-                                            href={route('kelola-obat-masuk.destroy', item.id)}
-                                            className="inline-flex items-center px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded hover:bg-red-600 transition duration-200"
-                                            onClick={(e) => {
-                                                if (!confirm('Yakin ingin menghapus data ini?')) {
-                                                    e.preventDefault();
-                                                }
-                                            }}
-                                        >
-                                            Delete
-                                        </Link>
+                <div className="py-4 px-6 rounded-lg max-w-full overflow-x-auto bg-white">
+                    <div className='flex items-center justify-end p-4'>
+                        <PrimaryButton>
+                            <Link href={route('kelola-data-obat-masuk.create')}>
+                                + TAMBAH DATA OBAT MASUK
+                            </Link>
+                        </PrimaryButton>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full max-w-full table-auto border border-gray-200 mx-auto text-sm">
+                            <thead className="bg-gray-200">
+                                <tr>
+                                    <th className="px-3 py-2 text-center font-medium text-gray-500 uppercase">Jumlah Masuk</th>
+                                    <th className="px-3 py-2 text-center font-medium text-gray-500 uppercase">Tanggal Masuk</th>
+                                    <th className="px-3 py-2 text-center font-medium text-gray-500 uppercase">Nama Distributor</th>
+                                    <th className="px-3 py-2 text-center font-medium text-gray-500 uppercase">Petugas Penerima</th>
+                                    <th className="px-3 py-2 text-center font-medium text-gray-500 uppercase">Keterangan</th>
+                                    <th className="px-3 py-2 text-center font-medium text-gray-500 uppercase">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white">
+                                {KDOM.data.map((item) => (
+                                <tr key={item.id} className="hover:bg-gray-50">
+                                    <td className="px-3 py-2 whitespace-nowrap text-gray-900">{item.jumlah_masuk}</td>
+                                    <td className="px-3 py-2 whitespace-nowrap text-gray-900">{item.tanggal_masuk}</td>
+                                    <td className="px-3 py-2 whitespace-nowrap text-gray-900">{item.nama_distributor}</td>
+                                    <td className="px-3 py-2 whitespace-nowrap text-gray-900">{item.petugas_penerima}</td>
+                                    <td className="px-3 py-2 whitespace-nowrap text-gray-900">{item.keterangan}</td>
+                                    <td className="px-3 py-2 whitespace-nowrap space-x-1">
+                                    <Link
+                                        href={route('kelola-data-obat-masuk.show', item.id)}
+                                        className="inline-flex items-center px-2 py-1 text-blue-500 text-xs font-semibold"
+                                    >
+                                        <FaEye />
+                                    </Link>
+                                    <Link
+                                        href={route('kelola-data-obat-masuk.edit', item.id)}
+                                        className="inline-flex items-center px-2 py-1 text-yellow-500 text-xs font-semibold "
+                                    >
+                                        <FaRegEdit />
+                                    </Link>
+                                    <Link
+                                        as="button"
+                                        method="delete"
+                                        href={route('kelola-data-obat-masuk.destroy', item.id)}
+                                        className="inline-flex items-center px-2 py-1 text-red-500 text-xs font-semibold"
+                                        onClick={(e) => {
+                                        if (!confirm('Yakin ingin menghapus data ini?')) {
+                                            e.preventDefault();
+                                        }
+                                        }}
+                                    >
+                                        <FaRegTrashAlt />
+                                    </Link>
                                     </td>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
 
                     <div className="p-4">
                         <div className="flex items-center justify-between">

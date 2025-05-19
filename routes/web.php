@@ -32,6 +32,7 @@ Route::prefix('/kelola-data-obat-masuk')->name('kelola-data-obat-masuk.')->group
         Route::put('/{kelolaDataObatMasuk}', [KelolaDataObatMasukController::class, 'update'])->name('update');
         Route::delete('/{kelolaDataObatMasuk}', [KelolaDataObatMasukController::class, 'destroy'])->name('destroy');
         Route::get('/{kelolaDataObatMasuk}/edit', [KelolaDataObatMasukController::class, 'edit'])->name('edit');
+        Route::get('/{kelolaDataObatMasuk}', [KelolaDataObatMasukController::class, 'show'])->name('show');
         Route::get('/', [KelolaDataObatMasukController::class, 'index'])->name('index');
     });
 });
