@@ -8,6 +8,7 @@ use App\Models\Distributor;
 use App\Models\Kontrak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class KontrakController extends Controller
@@ -54,6 +55,13 @@ class KontrakController extends Controller
         ]);
 
         return redirect()->route('kontrak.index');
+    }
+
+    public function destroy(Kontrak $kontrak)
+    {
+        $kontrak->delete();
+
+        return Redirect::route('kontrak.index')->with('message', 'Data kontrak berhasil dihapus.');
     }
 
     public function edit(Kontrak $kontrak)
