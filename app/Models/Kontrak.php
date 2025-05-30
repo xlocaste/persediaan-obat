@@ -22,12 +22,6 @@ class Kontrak extends Model
         'masa_kontrak',
     ];
 
-    protected $casts = [
-        'nilai_kontrak' => 'decimal:2',
-        'tanggal_mulai_kontrak' => 'date',
-        'tanggal_berakhir_kontrak' => 'date',
-    ];
-
     public function distributor()
     {
         return $this->belongsTo(Distributor::class);
