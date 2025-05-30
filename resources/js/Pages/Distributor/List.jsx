@@ -1,6 +1,7 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function List({ auth, distributor }) {
     return (
@@ -14,6 +15,11 @@ export default function List({ auth, distributor }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
+                            <div className="mb-4 flex justify-end">
+                                <Link href={route('distributor.create')}>
+                                    <PrimaryButton>+ Tambah Distributor</PrimaryButton>
+                                </Link>
+                            </div>
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -36,7 +42,9 @@ export default function List({ auth, distributor }) {
                                     ))}
                                     {distributor.length === 0 && (
                                         <tr>
-                                            <td colSpan="6" className="px-4 py-4 text-center text-gray-500">Tidak ada data distributor.</td>
+                                            <td colSpan="6" className="px-4 py-4 text-center text-gray-500">
+                                                Tidak ada data distributor.
+                                            </td>
                                         </tr>
                                     )}
                                 </tbody>
