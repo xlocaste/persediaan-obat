@@ -25,11 +25,11 @@ export default function AuthenticatedLayout({ header, children }) {
                         Distributor
                     </Link>
                     <Link
-                        href={route('profile.edit')}
-                        active={route().current('profile.edit')}
+                        href={route('kontrak.index')}
+                        active={route().current('kontrak.index')}
                         className="p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out"
                     >
-                        Daftar Obat
+                        Kontrak
                     </Link>
                     <Link
                         href={route('profile.edit')}
