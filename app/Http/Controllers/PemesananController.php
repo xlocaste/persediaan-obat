@@ -48,6 +48,13 @@ class PemesananController extends Controller
         return redirect()->route('pemesanan.index');
     }
 
+    public function destroy(Pemesanan $pemesanan)
+    {
+        $pemesanan->delete();
+
+        return redirect()->route('pemesanan.index')->with('message', 'Data pemesanan berhasil dihapus.');
+    }
+
     public function edit(Pemesanan $pemesanan)
     {
         return Inertia::render('Pemesanan/Update', [
