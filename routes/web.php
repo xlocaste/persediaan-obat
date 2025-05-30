@@ -3,6 +3,7 @@
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\KelolaDataObatMasukController;
 use App\Http\Controllers\KontrakController;
+use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,18 @@ Route::prefix('/kontrak')->name('kontrak.')->group(function() {
         Route::get('/{kontrak}/edit', [KontrakController::class, 'edit'])->name('edit');
         Route::get('/{kontrak}', [KontrakController::class, 'show'])->name('show');
         Route::get('/', [KontrakController::class, 'index'])->name('index');
+    });
+});
+
+Route::prefix('/pemesanan')->name('pemesanan.')->group(function() {
+    Route::group(['middleware' => ['auth']], function() {
+        Route::get('/create', [PemesananController::class, 'create'])->name('create');
+        Route::post('/', [PemesananController::class, 'store'])->name('store');
+        Route::put('/{pemesanan}', [PemesananController::class, 'update'])->name('update');
+        Route::delete('/{pemesanan}', [PemesananController::class, 'destroy'])->name('destroy');
+        Route::get('/{pemesanan}/edit', [PemesananController::class, 'edit'])->name('edit');
+        Route::get('/{pemesanan}', [PemesananController::class, 'show'])->name('show');
+        Route::get('/', [PemesananController::class, 'index'])->name('index');
     });
 });
 

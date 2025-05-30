@@ -32,11 +32,11 @@ export default function AuthenticatedLayout({ header, children }) {
                         Kontrak
                     </Link>
                     <Link
-                        href={route('profile.edit')}
-                        active={route().current('profile.edit')}
+                        href={route('pemesanan.index')}
+                        active={route().current('pemesanan.index')}
                         className="p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out"
                     >
-                        Distributor
+                        Pemesanan
                     </Link>
                     <Link
                         href={route('profile.edit')}
