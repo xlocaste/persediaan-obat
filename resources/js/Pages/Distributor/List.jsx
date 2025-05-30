@@ -1,9 +1,14 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function List({ auth, distributor }) {
+    const handleDelete = (id) => {
+        if (confirm('Yakin ingin menghapus distributor ini?')) {
+            router.delete(route('distributor.destroy', id));
+        }
+    };
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -39,13 +44,19 @@ export default function List({ auth, distributor }) {
                                             <td className="px-4 py-2">{item.alamat}</td>
                                             <td className="px-4 py-2">{item.no_rek}</td>
                                             <td className="px-4 py-2">{item.npwp}</td>
-                                            <td className="px-4 py-2">
+                                            <td className="px-4 py-2 space-x-2">
                                                 <Link
                                                     href={route('distributor.edit', item.id)}
                                                     className="text-indigo-600 hover:underline"
                                                 >
                                                     Edit
                                                 </Link>
+                                                <button
+                                                    onClick={() => handleDelete(item.id)}
+                                                    className="text-red-600 hover:underline"
+                                                >
+                                                    Hapus
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}

@@ -7,6 +7,7 @@ use App\Http\Requests\Distributor\UpdateRequest;
 use App\Models\Distributor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class DistributorController extends Controller
@@ -47,6 +48,13 @@ class DistributorController extends Controller
         ]);
 
         return redirect()->route('distributor.index');
+    }
+
+    public function destroy(Distributor $distributor)
+    {
+        $distributor->delete();
+
+        return Redirect::route('distributor.index')->with('message', 'Data berhasil dihapus');
     }
 
     public function edit(Distributor $distributor)
