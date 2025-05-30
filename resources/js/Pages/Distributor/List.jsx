@@ -28,6 +28,7 @@ export default function List({ auth, distributor }) {
                                         <th className="px-4 py-2">Alamat</th>
                                         <th className="px-4 py-2">No Rekening</th>
                                         <th className="px-4 py-2">NPWP</th>
+                                        <th className="px-4 py-2">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -38,6 +39,14 @@ export default function List({ auth, distributor }) {
                                             <td className="px-4 py-2">{item.alamat}</td>
                                             <td className="px-4 py-2">{item.no_rek}</td>
                                             <td className="px-4 py-2">{item.npwp}</td>
+                                            <td className="px-4 py-2">
+                                                <Link
+                                                    href={route('distributor.edit', item.id)}
+                                                    className="text-indigo-600 hover:underline"
+                                                >
+                                                    Edit
+                                                </Link>
+                                            </td>
                                         </tr>
                                     ))}
                                     {distributor.length === 0 && (
