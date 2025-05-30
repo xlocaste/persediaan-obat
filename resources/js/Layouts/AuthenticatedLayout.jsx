@@ -18,8 +18,8 @@ export default function AuthenticatedLayout({ header, children }) {
 
                 <div className="p-4 space-y-2 flex flex-col">
                     <Link
-                        href={route('kelola-data-obat-masuk.index')}
-                        active={route().current('kelola-data-obat-masuk.index')}
+                        href={route('distributor.index')}
+                        active={route().current('distributor.index')}
                         className="p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out"
                     >
                         Distributor

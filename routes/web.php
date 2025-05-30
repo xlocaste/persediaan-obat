@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\KelolaDataObatMasukController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -20,15 +21,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('/kelola-data-obat-masuk')->name('kelola-data-obat-masuk.')->group(function() {
+Route::prefix('/distributor')->name('distributor.')->group(function() {
     Route::group(['middleware' => ['auth']], function() {
-        Route::get('/create', [KelolaDataObatMasukController::class, 'create'])->name('create');
-        Route::post('/', [KelolaDataObatMasukController::class, 'store'])->name('store');
-        Route::put('/{kelolaDataObatMasuk}', [KelolaDataObatMasukController::class, 'update'])->name('update');
-        Route::delete('/{kelolaDataObatMasuk}', [KelolaDataObatMasukController::class, 'destroy'])->name('destroy');
-        Route::get('/{kelolaDataObatMasuk}/edit', [KelolaDataObatMasukController::class, 'edit'])->name('edit');
-        Route::get('/{kelolaDataObatMasuk}', [KelolaDataObatMasukController::class, 'show'])->name('show');
-        Route::get('/', [KelolaDataObatMasukController::class, 'index'])->name('index');
+        Route::get('/create', [DistributorController::class, 'create'])->name('create');
+        Route::post('/', [DistributorController::class, 'store'])->name('store');
+        Route::put('/{distributor}', [DistributorController::class, 'update'])->name('update');
+        Route::delete('/{distributor}', [DistributorController::class, 'destroy'])->name('destroy');
+        Route::get('/{distributor}/edit', [DistributorController::class, 'edit'])->name('edit');
+        Route::get('/{distributor}', [DistributorController::class, 'show'])->name('show');
+        Route::get('/', [DistributorController::class, 'index'])->name('index');
     });
 });
 
