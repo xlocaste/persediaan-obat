@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Pengeluar\StoreRequest;
+use App\Http\Requests\Pengeluar\UpdateRequest;
 use App\Models\Pemesanan;
 use App\Models\Pengeluar;
 use Illuminate\Http\Request;
@@ -45,6 +46,64 @@ class PengeluarController extends Controller
         });
 
         return redirect()->route('pengeluar.index');
+    }
+
+    public function update(UpdateRequest $request, Pengeluar $pengeluar)
+    {
+        $oldJumlah = $pengeluar->jumlah;
+        $oldPemesananId = $pengeluar->pemesanan_id;
+
+        $newJumlah = $request->jumlah;
+        $newPemesananId = $request->pemesanan_id;
+
+        if ($oldPemesananId != $newPemesananId) {
+            $oldPemesanan = Pemesanan::find($oldPemesananId);
+            if ($oldPemesanan) {
+                $oldPemesanan->jumlah += $oldJumlah;
+                $oldPemesanan->save();
+            }
+
+            $newPemesanan = Pemesanan::find($newPemesananId);
+            if ($newPemesanan) {
+                if ($newPemesanan->jumlah < $newJumlah) {
+                    return back()->withErrors(['jumlah' => 'Jumlah melebihi stok pemesanan.']);
+                }
+                $newPemesanan->jumlah -= $newJumlah;
+                $newPemesanan->save();
+            }
+        } else {
+            $selisih = $newJumlah - $oldJumlah;
+
+            $pemesanan = Pemesanan::find($oldPemesananId);
+            if ($pemesanan) {
+                if ($selisih > 0) {
+                    if ($pemesanan->jumlah < $selisih) {
+                        return back()->withErrors(['jumlah' => 'Jumlah melebihi stok pemesanan.']);
+                    }
+                    $pemesanan->jumlah -= $selisih;
+                } else if ($selisih < 0) {
+                    $pemesanan->jumlah += abs($selisih);
+                }
+                $pemesanan->save();
+            }
+        }
+
+        $pengeluar->update([
+            'pemesanan_id' => $newPemesananId,
+            'nama_tujuan' => $request->nama_tujuan,
+            'nama_barang' => $request->nama_barang,
+            'jumlah' => $newJumlah,
+        ]);
+
+        return redirect()->route('pengeluar.index');
+    }
+
+    public function edit(Pengeluar $pengeluar)
+    {
+        return Inertia::render('Pengeluar/Update', [
+            'pengeluar' => $pengeluar,
+            'pemesanan' => Pemesanan::get(),
+        ]);
     }
 
     public function create()
