@@ -50,6 +50,13 @@ class PengirimanController extends Controller
         return redirect()->route('pengiriman.index');
     }
 
+    public function destroy(Pengiriman $pengiriman)
+    {
+        $pengiriman->delete();
+
+        return redirect()->route('pengiriman.index')->with('message', 'Data pengiriman berhasil dihapus.');
+    }
+
     public function edit(Pengiriman $pengiriman)
     {
         return Inertia::render('Pengiriman/Update', [
