@@ -48,6 +48,13 @@ class PenerimaController extends Controller
         return redirect()->route('penerima.index');
     }
 
+    public function destroy(Penerima $penerima)
+    {
+        $penerima->delete();
+
+        return redirect()->route('penerima.index')->with('message', 'Data penerima berhasil dihapus.');
+    }
+
     public function edit(Penerima $penerima)
     {
         return Inertia::render('Penerima/Update', [
