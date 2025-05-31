@@ -17,12 +17,8 @@ class BuktiPenerimaanController extends Controller
     {
         $buktiPenerimaan = BuktiPenerimaan::with('penerima.pengiriman.pemesanan.kontrak')->get();
 
-        return Inertia::render('BuktiPenerimaan/List', [
-            'buktiPenerimaan' => $buktiPenerimaan,
-            'auth' => [
-                'user' => Auth::user(),
-            ],
-        ]);
+        
+        
     }
 
     public function store(StoreRequest $request)
