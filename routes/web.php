@@ -4,6 +4,7 @@ use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\KelolaDataObatMasukController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\PenerimaController;
 use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -69,6 +70,18 @@ Route::prefix('/pengiriman')->name('pengiriman.')->group(function() {
         Route::get('/{pengiriman}/edit', [PengirimanController::class, 'edit'])->name('edit');
         Route::get('/{pengiriman}', [PengirimanController::class, 'show'])->name('show');
         Route::get('/', [PengirimanController::class, 'index'])->name('index');
+    });
+});
+
+Route::prefix('/penerima')->name('penerima.')->group(function() {
+    Route::group(['middleware' => ['auth']], function() {
+        Route::get('/create', [PenerimaController::class, 'create'])->name('create');
+        Route::post('/', [PenerimaController::class, 'store'])->name('store');
+        Route::put('/{penerima}', [PenerimaController::class, 'update'])->name('update');
+        Route::delete('/{penerima}', [PenerimaController::class, 'destroy'])->name('destroy');
+        Route::get('/{penerima}/edit', [PenerimaController::class, 'edit'])->name('edit');
+        Route::get('/{penerima}', [PenerimaController::class, 'show'])->name('show');
+        Route::get('/', [PenerimaController::class, 'index'])->name('index');
     });
 });
 

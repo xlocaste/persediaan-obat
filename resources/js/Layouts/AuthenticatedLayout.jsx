@@ -46,11 +46,11 @@ export default function AuthenticatedLayout({ header, children }) {
                         Pengiriman
                     </Link>
                     <Link
-                        href={route('profile.edit')}
-                        active={route().current('profile.edit')}
+                        href={route('penerima.index')}
+                        active={route().current('penerima.index')}
                         className="p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out"
                     >
-                        Stok Obat
+                        Penerima
                     </Link>
                     <Link
                         href={route('profile.edit')}
