@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Pengiriman\StoreRequest;
+use App\Http\Requests\Pengiriman\UpdateRequest;
 use App\Models\Pemesanan;
 use App\Models\Pengiriman;
 use Illuminate\Http\Request;
@@ -34,6 +35,27 @@ class PengirimanController extends Controller
         ]);
 
         return redirect()->route('pengiriman.index');
+    }
+
+    public function update(UpdateRequest $request, Pengiriman $pengiriman)
+    {
+        $pengiriman->update([
+            'pemesanan_id' => $request->pemesanan_id,
+            'tanggal' => $request->tanggal,
+            'no_faktur' => $request->no_faktur,
+            'jumlah' => $request->jumlah,
+            'satuan' => $request->satuan,
+        ]);
+
+        return redirect()->route('pengiriman.index');
+    }
+
+    public function edit(Pengiriman $pengiriman)
+    {
+        return Inertia::render('Pengiriman/Update', [
+            'pengiriman' => $pengiriman,
+            'pemesanan' => Pemesanan::all(),
+        ]);
     }
 
     public function create()
