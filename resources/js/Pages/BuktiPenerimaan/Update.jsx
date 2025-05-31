@@ -1,18 +1,21 @@
-import React from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/react';
+import React from "react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, useForm } from "@inertiajs/react";
 
-export default function Update({ auth, penerima, pengiriman }) {
-    const { data, setData, put, processing, errors } = useForm({
-        pengiriman_id: penerima.pengiriman_id || '',
-        tanggal: penerima.tanggal || '',
-        jumlah: penerima.jumlah || '',
-        satuan: penerima.satuan || '',
+export default function Edit({ auth, buktiPenerimaan, penerima }) {
+    const { data, setData, post, progress, errors, processing } = useForm({
+        _method: "put",
+        penerima_id: buktiPenerimaan.penerima_id || "",
+        image: null,
+        sp: buktiPenerimaan.sp || "",
+        spj_ba2: buktiPenerimaan.spj_ba2 || "",
+        realisasi: buktiPenerimaan.realisasi || "",
+        keterangan: buktiPenerimaan.keterangan || "",
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('penerima.update', penerima.id));
+        post(route("bukti-penerimaan.update", buktiPenerimaan.id));
     };
 
     return (
@@ -20,79 +23,149 @@ export default function Update({ auth, penerima, pengiriman }) {
             auth={auth}
             header={
                 <h2 className="font-semibold text-xl text-white leading-tight">
-                    Edit Penerimaan
+                    Edit Bukti Penerimaan
                 </h2>
             }
         >
-            <Head title="Edit Penerimaan" />
+            <Head title="Edit Bukti Penerimaan" />
 
             <div className="py-6">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white shadow-sm sm:rounded-lg p-6">
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="bg-white p-6 rounded shadow-sm">
+                        <form
+                            onSubmit={handleSubmit}
+                            className="space-y-6"
+                            encType="multipart/form-data"
+                        >
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Pilih Pengiriman
+                                    Penerima
                                 </label>
                                 <select
-                                    value={data.pengiriman_id}
-                                    onChange={(e) => setData('pengiriman_id', e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                    value={data.penerima_id}
+                                    onChange={(e) =>
+                                        setData("penerima_id", e.target.value)
+                                    }
+                                    className="w-full mt-1 border rounded px-3 py-2"
                                 >
-                                    <option value="">-- Pilih Pengiriman --</option>
-                                    {pengiriman.map((item) => (
+                                    <option value="">
+                                        -- Pilih Penerima --
+                                    </option>
+                                    {penerima.map((item) => (
                                         <option key={item.id} value={item.id}>
-                                            {item.no_faktur} - {item.tanggal}
+                                            {item.pengiriman.no_faktur} -{" "}
+                                            {item.tanggal}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.pengiriman_id && (
-                                    <p className="text-sm text-red-600">{errors.pengiriman_id}</p>
+                                {errors.penerima_id && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.penerima_id}
+                                    </p>
                                 )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Tanggal
+                                    Upload Gambar (Opsional, ganti jika perlu)
                                 </label>
                                 <input
-                                    type="date"
-                                    value={data.tanggal}
-                                    onChange={(e) => setData('tanggal', e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) =>
+                                        setData("image", e.target.files[0])
+                                    }
+                                    className="w-full mt-1"
                                 />
-                                {errors.tanggal && (
-                                    <p className="text-sm text-red-600">{errors.tanggal}</p>
+                                {progress && (
+                                    <div className="w-full bg-gray-200 rounded h-2 mt-2">
+                                        <div
+                                            className="bg-blue-500 h-2 rounded"
+                                            style={{
+                                                width: `${progress.percentage}%`,
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                                {errors.image && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.image}
+                                    </p>
                                 )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Jumlah
-                                </label>
-                                <input
-                                    type="number"
-                                    value={data.jumlah}
-                                    onChange={(e) => setData('jumlah', e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                                />
-                                {errors.jumlah && (
-                                    <p className="text-sm text-red-600">{errors.jumlah}</p>
-                                )}
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    Satuan
+                                    SP
                                 </label>
                                 <input
                                     type="text"
-                                    value={data.satuan}
-                                    onChange={(e) => setData('satuan', e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                    value={data.sp}
+                                    onChange={(e) =>
+                                        setData("sp", e.target.value)
+                                    }
+                                    className="w-full mt-1 border rounded px-3 py-2"
                                 />
-                                {errors.satuan && (
-                                    <p className="text-sm text-red-600">{errors.satuan}</p>
+                                {errors.sp && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.sp}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    SPJ / BA-2
+                                </label>
+                                <input
+                                    type="text"
+                                    value={data.spj_ba2}
+                                    onChange={(e) =>
+                                        setData("spj_ba2", e.target.value)
+                                    }
+                                    className="w-full mt-1 border rounded px-3 py-2"
+                                />
+                                {errors.spj_ba2 && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.spj_ba2}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Realisasi
+                                </label>
+                                <input
+                                    type="text"
+                                    value={data.realisasi}
+                                    onChange={(e) =>
+                                        setData("realisasi", e.target.value)
+                                    }
+                                    className="w-full mt-1 border rounded px-3 py-2"
+                                />
+                                {errors.realisasi && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.realisasi}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Keterangan
+                                </label>
+                                <textarea
+                                    value={data.keterangan}
+                                    onChange={(e) =>
+                                        setData("keterangan", e.target.value)
+                                    }
+                                    className="w-full mt-1 border rounded px-3 py-2"
+                                ></textarea>
+                                {errors.keterangan && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.keterangan}
+                                    </p>
                                 )}
                             </div>
 
@@ -100,9 +173,9 @@ export default function Update({ auth, penerima, pengiriman }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50"
+                                    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:opacity-50"
                                 >
-                                    Perbarui Penerimaan
+                                    Update Bukti
                                 </button>
                             </div>
                         </form>
