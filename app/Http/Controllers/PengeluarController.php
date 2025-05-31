@@ -98,6 +98,21 @@ class PengeluarController extends Controller
         return redirect()->route('pengeluar.index');
     }
 
+    public function destroy(Pengeluar $pengeluar)
+    {
+        $pemesanan = $pengeluar->pemesanan;
+
+        if ($pemesanan) {
+            $pemesanan->jumlah += $pengeluar->jumlah;
+            $pemesanan->save();
+        }
+
+        // Hapus data pengeluar
+        $pengeluar->delete();
+
+        return redirect()->route('pengeluar.index')->with('success', 'Data pengeluar berhasil dihapus dan stok pemesanan dikembalikan.');
+    }
+
     public function edit(Pengeluar $pengeluar)
     {
         return Inertia::render('Pengeluar/Update', [
