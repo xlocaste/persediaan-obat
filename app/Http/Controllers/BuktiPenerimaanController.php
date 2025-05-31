@@ -65,6 +65,13 @@ class BuktiPenerimaanController extends Controller
         return redirect()->route('bukti-penerimaan.index');
     }
 
+    public function destroy(BuktiPenerimaan $buktiPenerimaan)
+    {
+        $buktiPenerimaan->delete();
+
+        return redirect()->route('bukti-penerimaan.index')->with('message', 'Data bukti pengiriman berhasil dihapus.');
+    }
+
     public function edit(BuktiPenerimaan $buktiPenerimaan)
     {
         return Inertia::render('BuktiPenerimaan/Update', [
