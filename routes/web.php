@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BuktiPenerimaanController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\KelolaDataObatMasukController;
 use App\Http\Controllers\KontrakController;
@@ -82,6 +83,18 @@ Route::prefix('/penerima')->name('penerima.')->group(function() {
         Route::get('/{penerima}/edit', [PenerimaController::class, 'edit'])->name('edit');
         Route::get('/{penerima}', [PenerimaController::class, 'show'])->name('show');
         Route::get('/', [PenerimaController::class, 'index'])->name('index');
+    });
+});
+
+Route::prefix('/bukti-penerimaan')->name('bukti-penerimaan.')->group(function() {
+    Route::group(['middleware' => ['auth']], function() {
+        Route::get('/create', [BuktiPenerimaanController::class, 'create'])->name('create');
+        Route::post('/', [BuktiPenerimaanController::class, 'store'])->name('store');
+        Route::put('/{buktiPenerimaan}', [BuktiPenerimaanController::class, 'update'])->name('update');
+        Route::delete('/{buktiPenerimaan}', [BuktiPenerimaanController::class, 'destroy'])->name('destroy');
+        Route::get('/{buktiPenerimaan}/edit', [BuktiPenerimaanController::class, 'edit'])->name('edit');
+        Route::get('/{buktiPenerimaan}', [BuktiPenerimaanController::class, 'show'])->name('show');
+        Route::get('/', [BuktiPenerimaanController::class, 'index'])->name('index');
     });
 });
 

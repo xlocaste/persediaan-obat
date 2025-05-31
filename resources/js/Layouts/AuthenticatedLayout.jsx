@@ -53,11 +53,11 @@ export default function AuthenticatedLayout({ header, children }) {
                         Penerima
                     </Link>
                     <Link
-                        href={route('profile.edit')}
-                        active={route().current('profile.edit')}
+                        href={route('bukti-penerimaan.index')}
+                        active={route().current('bukti-penerimaan.index')}
                         className="p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out"
                     >
-                        Rekapitulasi Obat
+                        Bukti Penerimaan
                     </Link>
 
                     <button
