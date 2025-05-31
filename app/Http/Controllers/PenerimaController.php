@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Penerima\StoreRequest;
 use App\Models\Penerima;
+use App\Models\Pengiriman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -18,6 +20,25 @@ class PenerimaController extends Controller
             'auth' => [
                 'user' => Auth::user(),
             ],
+        ]);
+    }
+
+    public function store(StoreRequest $request)
+    {
+        Penerima::create([
+            'pengiriman_id' => $request->pengiriman_id,
+            'tanggal' => $request->tanggal,
+            'jumlah' => $request->jumlah,
+            'satuan' => $request->satuan,
+        ]);
+
+        return redirect()->route('penerima.index');
+    }
+
+    public function create()
+    {
+        return Inertia::render('Penerima/Add', [
+            'pengiriman' => Pengiriman::all(),
         ]);
     }
 }

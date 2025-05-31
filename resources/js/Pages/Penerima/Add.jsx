@@ -3,52 +3,59 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 
-export default function Add({ auth, pemesanan }) {
+export default function Add({ auth, pengiriman }) {
     const { data, setData, post, processing, errors } = useForm({
-        pemesanan_id: '',
+        pengiriman_id: '',
         tanggal: '',
-        no_faktur: '',
         jumlah: '',
         satuan: '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('pengiriman.store'));
+        post(route('penerima.store'));
     };
 
     return (
         <AuthenticatedLayout
             auth={auth}
-            header={<h2 className="font-semibold text-xl text-white leading-tight">Tambah Pengiriman</h2>}
+            header={
+                <h2 className="font-semibold text-xl text-white leading-tight">
+                    Tambah Penerimaan
+                </h2>
+            }
         >
-            <Head title="Tambah Pengiriman" />
+            <Head title="Tambah Penerimaan" />
 
             <div className="py-6">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white shadow-sm sm:rounded-lg p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Pilih Pemesanan</label>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Pilih Pengiriman
+                                </label>
                                 <select
-                                    value={data.pemesanan_id}
-                                    onChange={(e) => setData('pemesanan_id', e.target.value)}
+                                    value={data.pengiriman_id}
+                                    onChange={(e) => setData('pengiriman_id', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 >
-                                    <option value="">-- Pilih Pemesanan --</option>
-                                    {pemesanan.map((item) => (
+                                    <option value="">-- Pilih Pengiriman --</option>
+                                    {pengiriman.map((item) => (
                                         <option key={item.id} value={item.id}>
-                                            {item.nama_barang} ({item.jumlah} {item.satuan})
+                                            {item.no_faktur} - {item.tanggal}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.pemesanan_id && (
-                                    <p className="text-sm text-red-600">{errors.pemesanan_id}</p>
+                                {errors.pengiriman_id && (
+                                    <p className="text-sm text-red-600">{errors.pengiriman_id}</p>
                                 )}
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Tanggal</label>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Tanggal
+                                </label>
                                 <input
                                     type="date"
                                     value={data.tanggal}
@@ -61,20 +68,9 @@ export default function Add({ auth, pemesanan }) {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">No Faktur</label>
-                                <input
-                                    type="text"
-                                    value={data.no_faktur}
-                                    onChange={(e) => setData('no_faktur', e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                                />
-                                {errors.no_faktur && (
-                                    <p className="text-sm text-red-600">{errors.no_faktur}</p>
-                                )}
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">Jumlah</label>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Jumlah
+                                </label>
                                 <input
                                     type="number"
                                     value={data.jumlah}
@@ -87,7 +83,9 @@ export default function Add({ auth, pemesanan }) {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Satuan</label>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Satuan
+                                </label>
                                 <input
                                     type="text"
                                     value={data.satuan}
