@@ -6,6 +6,7 @@ use App\Http\Controllers\KelolaDataObatMasukController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\PenerimaController;
+use App\Http\Controllers\PengeluarController;
 use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -26,8 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('/distributor')->name('distributor.')->group(function() {
-    Route::group(['middleware' => ['auth']], function() {
+Route::prefix('/distributor')->name('distributor.')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', [DistributorController::class, 'create'])->name('create');
         Route::post('/', [DistributorController::class, 'store'])->name('store');
         Route::put('/{distributor}', [DistributorController::class, 'update'])->name('update');
@@ -38,8 +39,8 @@ Route::prefix('/distributor')->name('distributor.')->group(function() {
     });
 });
 
-Route::prefix('/kontrak')->name('kontrak.')->group(function() {
-    Route::group(['middleware' => ['auth']], function() {
+Route::prefix('/kontrak')->name('kontrak.')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', [KontrakController::class, 'create'])->name('create');
         Route::post('/', [KontrakController::class, 'store'])->name('store');
         Route::put('/{kontrak}', [KontrakController::class, 'update'])->name('update');
@@ -50,8 +51,8 @@ Route::prefix('/kontrak')->name('kontrak.')->group(function() {
     });
 });
 
-Route::prefix('/pemesanan')->name('pemesanan.')->group(function() {
-    Route::group(['middleware' => ['auth']], function() {
+Route::prefix('/pemesanan')->name('pemesanan.')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', [PemesananController::class, 'create'])->name('create');
         Route::post('/', [PemesananController::class, 'store'])->name('store');
         Route::put('/{pemesanan}', [PemesananController::class, 'update'])->name('update');
@@ -62,8 +63,8 @@ Route::prefix('/pemesanan')->name('pemesanan.')->group(function() {
     });
 });
 
-Route::prefix('/pengiriman')->name('pengiriman.')->group(function() {
-    Route::group(['middleware' => ['auth']], function() {
+Route::prefix('/pengiriman')->name('pengiriman.')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', [PengirimanController::class, 'create'])->name('create');
         Route::post('/', [PengirimanController::class, 'store'])->name('store');
         Route::put('/{pengiriman}', [PengirimanController::class, 'update'])->name('update');
@@ -74,8 +75,8 @@ Route::prefix('/pengiriman')->name('pengiriman.')->group(function() {
     });
 });
 
-Route::prefix('/penerima')->name('penerima.')->group(function() {
-    Route::group(['middleware' => ['auth']], function() {
+Route::prefix('/penerima')->name('penerima.')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', [PenerimaController::class, 'create'])->name('create');
         Route::post('/', [PenerimaController::class, 'store'])->name('store');
         Route::put('/{penerima}', [PenerimaController::class, 'update'])->name('update');
@@ -86,8 +87,8 @@ Route::prefix('/penerima')->name('penerima.')->group(function() {
     });
 });
 
-Route::prefix('/bukti-penerimaan')->name('bukti-penerimaan.')->group(function() {
-    Route::group(['middleware' => ['auth']], function() {
+Route::prefix('/bukti-penerimaan')->name('bukti-penerimaan.')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', [BuktiPenerimaanController::class, 'create'])->name('create');
         Route::post('/', [BuktiPenerimaanController::class, 'store'])->name('store');
         Route::put('/{buktiPenerimaan}', [BuktiPenerimaanController::class, 'update'])->name('update');
@@ -98,4 +99,15 @@ Route::prefix('/bukti-penerimaan')->name('bukti-penerimaan.')->group(function() 
     });
 });
 
-require __DIR__.'/auth.php';
+Route::prefix('/pengeluar')->name('pengeluar.')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/create', [PengeluarController::class, 'create'])->name('create');
+        Route::post('/', [PengeluarController::class, 'store'])->name('store');
+        Route::put('/{pengeluar}', [PengeluarController::class, 'update'])->name('update');
+        Route::delete('/{pengeluar}', [PengeluarController::class, 'destroy'])->name('destroy');
+        Route::get('/{pengeluar}/edit', [PengeluarController::class, 'edit'])->name('edit');
+        Route::get('/{pengeluar}', [PengeluarController::class, 'show'])->name('show');
+        Route::get('/', [PengeluarController::class, 'index'])->name('index');
+    });
+});
+require __DIR__ . '/auth.php';

@@ -59,6 +59,13 @@ export default function AuthenticatedLayout({ header, children }) {
                     >
                         Bukti Penerimaan
                     </Link>
+                    <Link
+                        href={route("pengeluar.index")}
+                        active={route().current("pengeluar.index")}
+                        className="p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out"
+                    >
+                        Pengeluar
+                    </Link>
 
                     <button
                         onClick={() => setShowDropdown(!showDropdown)}
