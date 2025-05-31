@@ -1,19 +1,24 @@
-import React from 'react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/react';
-import PrimaryButton from '@/Components/PrimaryButton';
+import React from "react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, useForm } from "@inertiajs/react";
+import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Add({ auth, pengiriman }) {
+export default function Add({ auth, penerima }) {
     const { data, setData, post, processing, errors } = useForm({
-        pengiriman_id: '',
-        tanggal: '',
-        jumlah: '',
-        satuan: '',
+        penerima_id: "",
+        image: null,
+        sp: "",
+        spj_ba2: "",
+        realisasi: "",
+        keterangan: "",
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('penerima.store'));
+
+        post(route("bukti-penerimaan.store"), {
+            forceFormData: true,
+        });
     };
 
     return (
@@ -21,84 +26,144 @@ export default function Add({ auth, pengiriman }) {
             auth={auth}
             header={
                 <h2 className="font-semibold text-xl text-white leading-tight">
-                    Tambah Penerimaan
+                    Tambah Bukti Penerimaan
                 </h2>
             }
         >
-            <Head title="Tambah Penerimaan" />
+            <Head title="Tambah Bukti Penerimaan" />
 
             <div className="py-6">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white shadow-sm sm:rounded-lg p-6">
+                    <div className="bg-white p-6 shadow-sm sm:rounded-lg">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Pilih Pengiriman
+                                    Pilih Penerima
                                 </label>
                                 <select
-                                    value={data.pengiriman_id}
-                                    onChange={(e) => setData('pengiriman_id', e.target.value)}
+                                    value={data.penerima_id}
+                                    onChange={(e) =>
+                                        setData("penerima_id", e.target.value)
+                                    }
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 >
-                                    <option value="">-- Pilih Pengiriman --</option>
-                                    {pengiriman.map((item) => (
-                                        <option key={item.id} value={item.id}>
-                                            {item.no_faktur} - {item.tanggal}
+                                    <option value="">
+                                        -- Pilih Penerima --
+                                    </option>
+                                    {penerima.map((p) => (
+                                        <option key={p.id} value={p.id}>
+                                            {p.pengiriman?.no_faktur ??
+                                                "Faktur Tidak Ada"}{" "}
+                                            - {p.tanggal}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.pengiriman_id && (
-                                    <p className="text-sm text-red-600">{errors.pengiriman_id}</p>
+                                {errors.penerima_id && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.penerima_id}
+                                    </p>
                                 )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Tanggal
+                                    Foto Bukti (Image)
                                 </label>
                                 <input
-                                    type="date"
-                                    value={data.tanggal}
-                                    onChange={(e) => setData('tanggal', e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) =>
+                                        setData("image", e.target.files[0])
+                                    }
+                                    className="mt-1 block w-full"
                                 />
-                                {errors.tanggal && (
-                                    <p className="text-sm text-red-600">{errors.tanggal}</p>
+                                {errors.image && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.image}
+                                    </p>
                                 )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Jumlah
-                                </label>
-                                <input
-                                    type="number"
-                                    value={data.jumlah}
-                                    onChange={(e) => setData('jumlah', e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                                />
-                                {errors.jumlah && (
-                                    <p className="text-sm text-red-600">{errors.jumlah}</p>
-                                )}
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    Satuan
+                                    SP
                                 </label>
                                 <input
                                     type="text"
-                                    value={data.satuan}
-                                    onChange={(e) => setData('satuan', e.target.value)}
+                                    value={data.sp}
+                                    onChange={(e) =>
+                                        setData("sp", e.target.value)
+                                    }
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 />
-                                {errors.satuan && (
-                                    <p className="text-sm text-red-600">{errors.satuan}</p>
+                                {errors.sp && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.sp}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    SPJ / BA-2
+                                </label>
+                                <input
+                                    type="text"
+                                    value={data.spj_ba2}
+                                    onChange={(e) =>
+                                        setData("spj_ba2", e.target.value)
+                                    }
+                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                />
+                                {errors.spj_ba2 && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.spj_ba2}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Realisasi
+                                </label>
+                                <input
+                                    type="text"
+                                    value={data.realisasi}
+                                    onChange={(e) =>
+                                        setData("realisasi", e.target.value)
+                                    }
+                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                />
+                                {errors.realisasi && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.realisasi}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Keterangan
+                                </label>
+                                <textarea
+                                    value={data.keterangan}
+                                    onChange={(e) =>
+                                        setData("keterangan", e.target.value)
+                                    }
+                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                ></textarea>
+                                {errors.keterangan && (
+                                    <p className="text-sm text-red-600">
+                                        {errors.keterangan}
+                                    </p>
                                 )}
                             </div>
 
                             <div className="flex justify-end">
-                                <PrimaryButton type="submit" disabled={processing}>
+                                <PrimaryButton
+                                    type="submit"
+                                    disabled={processing}
+                                >
                                     Simpan
                                 </PrimaryButton>
                             </div>
