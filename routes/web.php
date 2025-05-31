@@ -4,6 +4,7 @@ use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\KelolaDataObatMasukController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\PemesananController;
+use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,18 @@ Route::prefix('/pemesanan')->name('pemesanan.')->group(function() {
         Route::get('/{pemesanan}/edit', [PemesananController::class, 'edit'])->name('edit');
         Route::get('/{pemesanan}', [PemesananController::class, 'show'])->name('show');
         Route::get('/', [PemesananController::class, 'index'])->name('index');
+    });
+});
+
+Route::prefix('/pengiriman')->name('pengiriman.')->group(function() {
+    Route::group(['middleware' => ['auth']], function() {
+        Route::get('/create', [PengirimanController::class, 'create'])->name('create');
+        Route::post('/', [PengirimanController::class, 'store'])->name('store');
+        Route::put('/{pengiriman}', [PengirimanController::class, 'update'])->name('update');
+        Route::delete('/{pengiriman}', [PengirimanController::class, 'destroy'])->name('destroy');
+        Route::get('/{pengiriman}/edit', [PengirimanController::class, 'edit'])->name('edit');
+        Route::get('/{pengiriman}', [PengirimanController::class, 'show'])->name('show');
+        Route::get('/', [PengirimanController::class, 'index'])->name('index');
     });
 });
 
