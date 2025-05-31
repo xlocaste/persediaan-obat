@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Penerima\StoreRequest;
+use App\Http\Requests\Penerima\UpdateRequest;
 use App\Models\Penerima;
 use App\Models\Pengiriman;
 use Illuminate\Http\Request;
@@ -33,6 +34,26 @@ class PenerimaController extends Controller
         ]);
 
         return redirect()->route('penerima.index');
+    }
+
+    public function update(UpdateRequest $request, Penerima $penerima)
+    {
+        $penerima->update([
+            'pengiriman_id' => $request->pengiriman_id,
+            'tanggal' => $request->tanggal,
+            'jumlah' => $request->jumlah,
+            'satuan' => $request->satuan,
+        ]);
+
+        return redirect()->route('penerima.index');
+    }
+
+    public function edit(Penerima $penerima)
+    {
+        return Inertia::render('Penerima/Update', [
+            'penerima' => $penerima,
+            'pengiriman' => Pengiriman::all(),
+        ]);
     }
 
     public function create()
