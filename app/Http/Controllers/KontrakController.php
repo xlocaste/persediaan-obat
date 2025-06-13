@@ -13,12 +13,25 @@ use Inertia\Inertia;
 
 class KontrakController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $daftarKontrak = Kontrak::all();
+        $search = $request->input('search');
+
+        $daftarKontrak = Kontrak::with('distributor')
+            ->when($search, function ($query, $search) {
+                $query->where('no_id_paket', 'like', "%{$search}%")
+                    ->orWhere('nama_penyedia', 'like', "%{$search}%")
+                    ->orWhereHas('distributor', function ($q) use ($search) {
+                        $q->where('nama_perusahaan', 'like', "%{$search}%");
+                    });
+            })
+            ->get();
 
         return Inertia::render('Kontrak/List', [
             'kontrak' => $daftarKontrak,
+            'filters' => [
+                'search' => $search,
+            ],
             'auth' => [
                 'user' => Auth::user(),
             ],

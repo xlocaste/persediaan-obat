@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
-export default function List({ auth, kontrak }) {
+export default function List({ auth, kontrak, filters }) {
+    const [search, setSearch] = useState(filters.search || '');
+
     const handleDelete = (id) => {
         if (confirm('Yakin ingin menghapus kontrak ini?')) {
             router.delete(route('kontrak.destroy', id));
         }
+    };
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        router.get(route('kontrak.index'), { search }, { preserveState: true });
     };
 
     return (
@@ -21,11 +29,31 @@ export default function List({ auth, kontrak }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <div className="mb-4 flex justify-end">
-                                <Link href={route('kontrak.create')}>
-                                    <PrimaryButton>+ Tambah Kontrak</PrimaryButton>
-                                </Link>
+                            <div className="mb-4 flex justify-between items-center">
+                                <form onSubmit={handleSearch}>
+                                    <input
+                                        type="text"
+                                        placeholder="Cari nama perusahaan / manager..."
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        className="border rounded px-3 py-2 w-64"
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="ml-2 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+                                    >
+                                        Cari
+                                    </button>
+                                </form>
+
+                                <div className="mb-4 flex justify-end">
+                                    <Link href={route('kontrak.create')}>
+                                        <PrimaryButton>+ Tambah Kontrak</PrimaryButton>
+                                    </Link>
+                                </div>
                             </div>
+
+                            {/* Tabel Data */}
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -36,7 +64,7 @@ export default function List({ auth, kontrak }) {
                                         <th className="px-4 py-2">Tanggal Mulai</th>
                                         <th className="px-4 py-2">Tanggal Berakhir</th>
                                         <th className="px-4 py-2">Masa Kontrak</th>
-                                        <th className="px-4 py-2">Action</th>
+                                        <th className="px-4 py-2 text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -49,18 +77,20 @@ export default function List({ auth, kontrak }) {
                                             <td className="px-4 py-2">{item.tanggal_mulai_kontrak}</td>
                                             <td className="px-4 py-2">{item.tanggal_berakhir_kontrak}</td>
                                             <td className="px-4 py-2">{item.masa_kontrak}</td>
-                                            <td className="px-4 py-2 space-x-2">
+                                            <td className="px-4 py-2 flex justify-center gap-2">
                                                 <Link
                                                     href={route('kontrak.edit', item.id)}
-                                                    className="text-indigo-600 hover:underline"
+                                                    className="text-indigo-600 hover:text-indigo-800"
+                                                    title="Edit"
                                                 >
-                                                    Edit
+                                                    <FaEdit />
                                                 </Link>
                                                 <button
                                                     onClick={() => handleDelete(item.id)}
-                                                    className="text-red-600 hover:underline"
+                                                    className="text-red-600 hover:text-red-800"
+                                                    title="Hapus"
                                                 >
-                                                    Hapus
+                                                    <FaTrash />
                                                 </button>
                                             </td>
                                         </tr>
@@ -74,6 +104,7 @@ export default function List({ auth, kontrak }) {
                                     )}
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
