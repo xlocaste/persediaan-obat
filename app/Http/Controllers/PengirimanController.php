@@ -12,12 +12,25 @@ use Inertia\Inertia;
 
 class PengirimanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pengiriman = Pengiriman::with('pemesanan.kontrak')->get();
+        $query = Pengiriman::with('pemesanan.kontrak');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+
+            $query->where('no_faktur', 'like', "%$search%")
+                ->orWhere('satuan', 'like', "%$search%")
+                ->orWhereHas('pemesanan.kontrak', function ($q) use ($search) {
+                    $q->where('no_id_paket', 'like', "%$search%");
+                });
+        }
+
+        $pengiriman = $query->get();
 
         return Inertia::render('Pengiriman/List', [
             'pengiriman' => $pengiriman,
+            'filters' => $request->only('search'),
             'auth' => [
                 'user' => Auth::user(),
             ],
