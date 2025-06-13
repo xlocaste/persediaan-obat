@@ -12,12 +12,22 @@ use Inertia\Inertia;
 
 class DistributorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $daftarDistributor = Distributor::all();
+        $search = $request->input('search');
+
+        $daftarDistributor = Distributor::query()
+            ->when($search, function ($query, $search) {
+                $query->where('nama_perusahaan', 'like', "%{$search}%")
+                    ->orWhere('manager', 'like', "%{$search}%");
+            })
+            ->get();
 
         return Inertia::render('Distributor/List', [
             'distributor' => $daftarDistributor,
+            'filters' => [
+                'search' => $search,
+            ],
             'auth' => [
                 'user' => Auth::user(),
             ],

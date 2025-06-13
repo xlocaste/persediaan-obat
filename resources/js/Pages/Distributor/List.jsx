@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 
-export default function List({ auth, distributor }) {
+export default function List({ auth, distributor, filters }) {
+    const [search, setSearch] = useState(filters?.search || '');
+
     const handleDelete = (id) => {
         if (confirm('Yakin ingin menghapus distributor ini?')) {
-        router.delete(route('distributor.destroy', id));
+            router.delete(route('distributor.destroy', id));
         }
     };
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        router.get(route('distributor.index'), { search }, { preserveScroll: true, preserveState: true });
+    };
+
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -20,11 +28,28 @@ export default function List({ auth, distributor }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <div className="mb-4 flex justify-end">
+                            <div className="mb-4 flex justify-between items-center">
+                                <form onSubmit={handleSearch}>
+                                    <input
+                                        type="text"
+                                        placeholder="Cari nama perusahaan / manager..."
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        className="border rounded px-3 py-2 w-64"
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="ml-2 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+                                    >
+                                        Cari
+                                    </button>
+                                </form>
+
                                 <Link href={route('distributor.create')}>
                                     <PrimaryButton>+ Tambah Distributor</PrimaryButton>
                                 </Link>
                             </div>
+
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
