@@ -22,12 +22,11 @@ export default function List({ auth, stokObat }) {
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
+                                        <th className="px-4 py-2">Nama Barang</th>
                                         <th className="px-4 py-2">Tanggal</th>
                                         <th className="px-4 py-2">Jumlah</th>
                                         <th className="px-4 py-2">Satuan</th>
-                                        <th className="px-4 py-2">
-                                            Dari Penerima
-                                        </th>
+                                        <th className="px-4 py-2">Dari Penerima</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -37,6 +36,9 @@ export default function List({ auth, stokObat }) {
                                                 key={item.id}
                                                 className="hover:bg-gray-50"
                                             >
+                                                <td className="px-4 py-2">
+                                                    {item.penerima?.pengiriman?.pemesanan?.nama_barang || "-"}
+                                                </td>
                                                 <td className="px-4 py-2">
                                                     {item.tanggal}
                                                 </td>
