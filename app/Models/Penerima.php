@@ -22,4 +22,21 @@ class Penerima extends Model
     {
         return $this->belongsTo(Pengiriman::class);
     }
+
+    public function stokObat()
+    {
+        return $this->hasOne(StokObat::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($penerima) {
+            StokObat::create([
+                'penerima_id' => $penerima->id,
+                'tanggal' => $penerima->tanggal,
+                'jumlah' => $penerima->jumlah,
+                'satuan' => $penerima->satuan,
+            ]);
+        });
+    }
 }

@@ -66,6 +66,13 @@ export default function AuthenticatedLayout({ header, children }) {
                     >
                         Pengeluar
                     </Link>
+                    <Link
+                        href={route("stok-obat.index")}
+                        active={route().current("stok-obat.index")}
+                        className="p-2 rounded-lg hover:bg-white hover:text-indigo-700 focus:bg-white focus:text-indigo-700 transition duration-300 ease-in-out"
+                    >
+                        Stok Obat
+                    </Link>
 
                     <button
                         onClick={() => setShowDropdown(!showDropdown)}

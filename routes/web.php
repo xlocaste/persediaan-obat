@@ -9,6 +9,7 @@ use App\Http\Controllers\PenerimaController;
 use App\Http\Controllers\PengeluarController;
 use App\Http\Controllers\PengirimanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StokObatController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -113,6 +114,12 @@ Route::prefix('/pengeluar')->name('pengeluar.')->group(function () {
         Route::get('/{pengeluar}/edit', [PengeluarController::class, 'edit'])->name('edit');
         Route::get('/{pengeluar}', [PengeluarController::class, 'show'])->name('show');
         Route::get('/', [PengeluarController::class, 'index'])->name('index');
+    });
+});
+
+Route::prefix('/stok-obat')->name('stok-obat.')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/', [StokObatController::class, 'index'])->name('index');
     });
 });
 require __DIR__ . '/auth.php';
