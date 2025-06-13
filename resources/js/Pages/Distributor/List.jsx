@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function List({ auth, distributor, filters }) {
     const [search, setSearch] = useState(filters?.search || '');
@@ -69,18 +70,18 @@ export default function List({ auth, distributor, filters }) {
                                             <td className="px-4 py-2">{item.alamat}</td>
                                             <td className="px-4 py-2">{item.no_rek}</td>
                                             <td className="px-4 py-2">{item.npwp}</td>
-                                            <td className="px-4 py-2 space-x-2">
+                                            <td className="px-4 py-2 space-x-2 inline-flex">
                                                 <Link
                                                     href={route('distributor.edit', item.id)}
                                                     className="text-indigo-600 hover:underline"
                                                 >
-                                                    Edit
+                                                    <FaEdit />
                                                 </Link>
                                                 <button
                                                     onClick={() => handleDelete(item.id)}
                                                     className="text-red-600 hover:underline"
                                                 >
-                                                    Hapus
+                                                    <FaTrash />
                                                 </button>
                                             </td>
                                         </tr>

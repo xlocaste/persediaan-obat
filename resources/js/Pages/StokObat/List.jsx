@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
+import dayjs from 'dayjs';
+import 'dayjs/locale/id';
+
+dayjs.locale('id');
+
 
 export default function List({ auth, stokObat, filters }) {
     const [search, setSearch] = useState(filters?.search || "");
@@ -61,7 +66,9 @@ export default function List({ auth, stokObat, filters }) {
                                                 <td className="px-4 py-2">
                                                     {item.penerima?.pengiriman?.pemesanan?.nama_barang || "-"}
                                                 </td>
-                                                <td className="px-4 py-2">{item.tanggal}</td>
+                                                <td className="px-4 py-2">
+                                                    {item.tanggal ? dayjs(item.tanggal).format('D MMMM YYYY') : '-'}
+                                                </td>
                                                 <td className="px-4 py-2">{item.jumlah}</td>
                                                 <td className="px-4 py-2">{item.satuan}</td>
                                                 <td className="px-4 py-2">

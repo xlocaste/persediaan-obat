@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 export default function List({ auth, daftarPengeluar, filters }) {
     const [search, setSearch] = useState(filters.search || "");
@@ -79,18 +80,18 @@ export default function List({ auth, daftarPengeluar, filters }) {
                                                 <td className="px-4 py-2">{item.nama_tujuan}</td>
                                                 <td className="px-4 py-2">{item.nama_barang}</td>
                                                 <td className="px-4 py-2">{item.jumlah}</td>
-                                                <td className="px-4 py-2 text-center space-x-2">
+                                                <td className="px-4 py-2 text-center space-x-2 inline-flex">
                                                     <Link
                                                         href={route("pengeluar.edit", item.id)}
                                                         className="text-indigo-600 hover:underline"
                                                     >
-                                                        Edit
+                                                        <FaEdit />
                                                     </Link>
                                                     <button
                                                         onClick={() => handleDelete(item.id)}
                                                         className="text-red-600 hover:underline"
                                                     >
-                                                        Hapus
+                                                        <FaTrash />
                                                     </button>
                                                 </td>
                                             </tr>

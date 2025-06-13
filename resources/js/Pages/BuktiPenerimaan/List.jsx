@@ -77,7 +77,7 @@ export default function List({ auth, buktiPenerimaan, filters }) {
                                                 <td className="px-4 py-2">{item.spj_ba2}</td>
                                                 <td className="px-4 py-2">{item.realisasi}</td>
                                                 <td className="px-4 py-2">{item.keterangan}</td>
-                                                <td className="px-4 py-2 text-center space-x-2">
+                                                <td className="px-4 py-2 text-center space-x-2 inline-flex">
                                                     <Link
                                                         href={route('bukti-penerimaan.edit', item.id)}
                                                         className="text-indigo-600 hover:text-indigo-800"

@@ -3,6 +3,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import dayjs from 'dayjs';
+import 'dayjs/locale/id';
+dayjs.locale('id');
 
 export default function List({ auth, pengiriman, filters }) {
     const [search, setSearch] = useState(filters.search || '');
@@ -73,7 +76,9 @@ export default function List({ auth, pengiriman, filters }) {
                                                     {item.pemesanan?.kontrak?.no_id_paket || '-'}
                                                 </td>
                                                 <td className="px-4 py-2">{item.no_faktur}</td>
-                                                <td className="px-4 py-2">{item.tanggal}</td>
+                                                <td className="px-4 py-2">
+                                                    {item.tanggal ? dayjs(item.tanggal).format('D MMMM YYYY') : '-'}
+                                                </td>
                                                 <td className="px-4 py-2">{item.jumlah}</td>
                                                 <td className="px-4 py-2">{item.satuan}</td>
                                                 <td className="px-4 py-2 flex justify-center gap-2">

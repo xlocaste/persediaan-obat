@@ -3,6 +3,10 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import dayjs from 'dayjs';
+import 'dayjs/locale/id';
+dayjs.locale('id');
+
 
 export default function List({ auth, kontrak, filters }) {
     const [search, setSearch] = useState(filters.search || '');
@@ -74,8 +78,12 @@ export default function List({ auth, kontrak, filters }) {
                                             <td className="px-4 py-2">{item.nama_penyedia}</td>
                                             <td className="px-4 py-2">{item.no_tanggal_kontrak}</td>
                                             <td className="px-4 py-2">Rp {parseFloat(item.nilai_kontrak).toLocaleString('id-ID')}</td>
-                                            <td className="px-4 py-2">{item.tanggal_mulai_kontrak}</td>
-                                            <td className="px-4 py-2">{item.tanggal_berakhir_kontrak}</td>
+                                            <td className="px-4 py-2">
+                                            {item.tanggal_mulai_kontrak ? dayjs(item.tanggal_mulai_kontrak).format('D MMMM YYYY') : '-'}
+                                            </td>
+                                            <td className="px-4 py-2">
+                                            {item.tanggal_berakhir_kontrak ? dayjs(item.tanggal_berakhir_kontrak).format('D MMMM YYYY') : '-'}
+                                            </td>
                                             <td className="px-4 py-2">{item.masa_kontrak}</td>
                                             <td className="px-4 py-2 flex justify-center gap-2">
                                                 <Link
