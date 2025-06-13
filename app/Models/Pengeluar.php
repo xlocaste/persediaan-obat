@@ -12,14 +12,14 @@ class Pengeluar extends Model
     protected $table = 'pengeluar';
 
     protected $fillable = [
-        'pemesanan_id',
+        'stok_obat_id',
         'nama_tujuan',
         'nama_barang',
         'jumlah',
     ];
 
-    public function pemesanan()
+    public function stokObat()
     {
-        return $this->belongsTo(Pemesanan::class);
+        return $this->belongsTo(StokObat::class);
     }
 }

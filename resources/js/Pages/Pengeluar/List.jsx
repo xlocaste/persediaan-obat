@@ -4,6 +4,7 @@ import { Head, Link, router } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function List({ auth, daftarPengeluar }) {
+    console.log(daftarPengeluar)
     const handleDelete = (id) => {
         if (confirm("Yakin ingin menghapus data pengeluar ini?")) {
             router.delete(route("pengeluar.destroy", id));
@@ -54,8 +55,8 @@ export default function List({ auth, daftarPengeluar }) {
                                                 className="hover:bg-gray-50"
                                             >
                                                 <td className="px-4 py-2">
-                                                    {item.pemesanan
-                                                        ?.nama_barang || "-"}
+                                                    {item.stok_obat
+                                                        ?.penerima?.pengiriman?.pemesanan?.nama_barang || "-"}
                                                 </td>
                                                 <td className="px-4 py-2">
                                                     {item.nama_tujuan}

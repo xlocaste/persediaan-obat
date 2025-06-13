@@ -22,7 +22,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pemesanan_id' => ['required', 'exists:pemesanan,id'],
+            'stok_obat_id' => ['required', 'exists:stok_obat,id'],
             'nama_tujuan' => ['required', 'string', 'max:255'],
             'nama_barang' => ['required', 'string', 'max:255'],
             'jumlah' => ['required', 'integer', 'min:1'],
@@ -32,8 +32,8 @@ class StoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'pemesanan_id.required' => 'Pemesanan wajib dipilih.',
-            'pemesanan_id.exists' => 'Pemesanan tidak valid.',
+            'stok_obat_id.required' => 'Stok obat wajib dipilih.',
+            'stok_obat_id.exists' => 'Stok obat tidak valid.',
             'nama_tujuan.required' => 'Nama tujuan wajib diisi.',
             'nama_barang.required' => 'Nama barang wajib diisi.',
             'jumlah.required' => 'Jumlah wajib diisi.',

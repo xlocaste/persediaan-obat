@@ -3,9 +3,10 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Add({ auth, pemesanan }) {
+export default function Add({ auth, stokObat }) {
+    console.log(stokObat)
     const { data, setData, post, processing, errors } = useForm({
-        pemesanan_id: "",
+        stok_obat_id: "",
         nama_tujuan: "",
         nama_barang: "",
         jumlah: "",
@@ -13,7 +14,6 @@ export default function Add({ auth, pemesanan }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         post(route("pengeluar.store"), {
             forceFormData: true,
         });
@@ -36,27 +36,26 @@ export default function Add({ auth, pemesanan }) {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Pilih Pemesanan
+                                    Pilih Stok Obat
                                 </label>
                                 <select
-                                    value={data.pemesanan_id}
+                                    value={data.stok_obat_id}
                                     onChange={(e) =>
-                                        setData("pemesanan_id", e.target.value)
+                                        setData("stok_obat_id", e.target.value)
                                     }
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 >
-                                    <option value="">
-                                        -- Pilih Pemesanan --
-                                    </option>
-                                    {pemesanan.map((p) => (
-                                        <option key={p.id} value={p.id}>
-                                            {p.nama_barang} - Jumlah: {p.jumlah}
+                                    <option value="">-- Pilih Stok --</option>
+                                    {stokObat.map((stok) => (
+                                        <option key={stok.id} value={stok.id}>
+                                            {stok.penerima?.tanggal ?? '-'} -{" "}
+                                            {stok.jumlah} {stok.satuan}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.pemesanan_id && (
+                                {errors.stok_obat_id && (
                                     <p className="text-sm text-red-600">
-                                        {errors.pemesanan_id}
+                                        {errors.stok_obat_id}
                                     </p>
                                 )}
                             </div>
@@ -120,10 +119,7 @@ export default function Add({ auth, pemesanan }) {
                             </div>
 
                             <div className="flex justify-end">
-                                <PrimaryButton
-                                    type="submit"
-                                    disabled={processing}
-                                >
+                                <PrimaryButton type="submit" disabled={processing}>
                                     Simpan
                                 </PrimaryButton>
                             </div>
