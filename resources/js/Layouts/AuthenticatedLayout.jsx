@@ -1,6 +1,19 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
+import { HiMiniBuildingOffice2 } from "react-icons/hi2";
+import { FaFileContract, FaClipboardList, FaTruck, FaUserCheck, FaFileSignature, FaUserMinus, FaPills } from "react-icons/fa";
+
+const menuItems = [
+    { route: "distributor.index", label: "Distributor", icon: <HiMiniBuildingOffice2 className="w-5 h-5 mr-2" /> },
+    { route: "kontrak.index", label: "Kontrak", icon: <FaFileContract className="w-5 h-5 mr-2" /> },
+    { route: "pemesanan.index", label: "Pemesanan", icon: <FaClipboardList className="w-5 h-5 mr-2" /> },
+    { route: "pengiriman.index", label: "Pengiriman", icon: <FaTruck className="w-5 h-5 mr-2" /> },
+    { route: "penerima.index", label: "Penerima", icon: <FaUserCheck className="w-5 h-5 mr-2" /> },
+    { route: "bukti-penerimaan.index", label: "Bukti Penerimaan", icon: <FaFileSignature className="w-5 h-5 mr-2" /> },
+    { route: "pengeluar.index", label: "Pengeluar", icon: <FaUserMinus className="w-5 h-5 mr-2" /> },
+    { route: "stok-obat.index", label: "Stok Obat", icon: <FaPills className="w-5 h-5 mr-2" /> },
+];
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -8,7 +21,6 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="flex min-h-screen bg-[#f0fdfa] text-[#1f2937]">
-            {/* Sidebar */}
             <aside className="fixed h-screen w-64 bg-[#00b9ae] text-white shadow-lg">
                 <div className="flex items-center justify-center px-4 py-6">
                     <Link href="/">
@@ -17,22 +29,14 @@ export default function AuthenticatedLayout({ header, children }) {
                 </div>
 
                 <div className="p-4 space-y-1 flex flex-col">
-                    {[
-                        ["distributor.index", "Distributor"],
-                        ["kontrak.index", "Kontrak"],
-                        ["pemesanan.index", "Pemesanan"],
-                        ["pengiriman.index", "Pengiriman"],
-                        ["penerima.index", "Penerima"],
-                        ["bukti-penerimaan.index", "Bukti Penerimaan"],
-                        ["pengeluar.index", "Pengeluar"],
-                        ["stok-obat.index", "Stok Obat"],
-                    ].map(([routeName, label]) => (
+                    {menuItems.map(({ route: routeName, label, icon }) => (
                         <Link
                             key={routeName}
                             href={route(routeName)}
                             active={route().current(routeName)}
-                            className="p-2 rounded-lg hover:bg-[#f0fdfa] hover:text-[#00b9ae] transition duration-200 font-medium"
+                            className="flex items-center p-2 rounded-lg hover:bg-[#f0fdfa] hover:text-[#00b9ae] transition duration-200 font-medium"
                         >
+                            {icon}
                             {label}
                         </Link>
                     ))}
@@ -72,7 +76,6 @@ export default function AuthenticatedLayout({ header, children }) {
                 </div>
             </aside>
 
-            {/* Content Area */}
             <div className="flex-1 flex flex-col">
                 {header && (
                     <header className="bg-gradient-to-r from-[#00b9ae] via-[#2dd4bf] to-[#6ee7b7] shadow ml-64">
@@ -90,10 +93,8 @@ export default function AuthenticatedLayout({ header, children }) {
                         backgroundPosition: "center",
                     }}
                 >
-                    {/* Overlay gelap */}
                     <div className="absolute inset-0 bg-black opacity-50 z-0" />
 
-                    {/* Konten di atas background */}
                     <div className="relative z-10 p-6">
                         {children}
                     </div>
