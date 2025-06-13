@@ -13,12 +13,27 @@ use Inertia\Inertia;
 
 class BuktiPenerimaanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $buktiPenerimaan = BuktiPenerimaan::with('penerima.pengiriman.pemesanan.kontrak')->get();
+        $query = BuktiPenerimaan::with('penerima.pengiriman.pemesanan.kontrak');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+
+            $query->where('sp', 'like', "%$search%")
+                ->orWhere('spj_ba2', 'like', "%$search%")
+                ->orWhere('realisasi', 'like', "%$search%")
+                ->orWhere('keterangan', 'like', "%$search%")
+                ->orWhereHas('penerima.pengiriman', function ($q) use ($search) {
+                    $q->where('no_faktur', 'like', "%$search%");
+                });
+        }
+
+        $buktiPenerimaan = $query->get();
 
         return Inertia::render('BuktiPenerimaan/List', [
             'buktiPenerimaan' => $buktiPenerimaan,
+            'filters' => $request->only('search'),
             'auth' => [
                 'user' => Auth::user(),
             ],
