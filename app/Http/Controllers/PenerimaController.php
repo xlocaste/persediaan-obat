@@ -12,12 +12,26 @@ use Inertia\Inertia;
 
 class PenerimaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $penerima = Penerima::with('pengiriman.pemesanan.kontrak')->get();
+        $query = Penerima::with('pengiriman.pemesanan.kontrak');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+
+            $query->where('satuan', 'like', "%$search%")
+                ->orWhere('jumlah', 'like', "%$search%")
+                ->orWhere('tanggal', 'like', "%$search%")
+                ->orWhereHas('pengiriman', function ($q) use ($search) {
+                    $q->where('no_faktur', 'like', "%$search%");
+                });
+        }
+
+        $penerima = $query->get();
 
         return Inertia::render('Penerima/List', [
             'penerima' => $penerima,
+            'filters' => $request->only('search'),
             'auth' => [
                 'user' => Auth::user(),
             ],
