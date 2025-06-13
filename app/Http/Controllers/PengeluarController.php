@@ -6,18 +6,32 @@ use App\Http\Requests\Pengeluar\StoreRequest;
 use App\Http\Requests\Pengeluar\UpdateRequest;
 use App\Models\Pengeluar;
 use App\Models\StokObat;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PengeluarController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $daftarPengeluar = Pengeluar::with('stokObat.penerima.pengiriman.pemesanan')->get();
+        $query = Pengeluar::with('stokObat.penerima.pengiriman.pemesanan');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+
+            $query->where('nama_barang', 'like', "%$search%")
+                ->orWhere('nama_tujuan', 'like', "%$search%")
+                ->orWhereHas('stokObat.penerima.pengiriman.pemesanan', function ($q) use ($search) {
+                    $q->where('nama_barang', 'like', "%$search%");
+                });
+        }
+
+        $daftarPengeluar = $query->get();
 
         return Inertia::render('Pengeluar/List', [
             'daftarPengeluar' => $daftarPengeluar,
+            'filters' => $request->only('search'),
             'auth' => [
                 'user' => Auth::user(),
             ],
