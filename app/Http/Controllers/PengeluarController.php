@@ -58,7 +58,7 @@ class PengeluarController extends Controller
     {
         return Inertia::render('Pengeluar/Update', [
             'pengeluar' => $pengeluar,
-            'stokObat' => StokObat::with('penerima')->get(),
+            'stokObat' => StokObat::with('penerima.pengiriman.pemesanan')->get(),
         ]);
     }
 

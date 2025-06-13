@@ -2,10 +2,11 @@ import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 
-export default function Edit({ auth, pengeluar, pemesanan }) {
+export default function Edit({ auth, pengeluar, stokObat }) {
+    console.log(stokObat)
     const { data, setData, post, processing, errors } = useForm({
         _method: "put",
-        pemesanan_id: pengeluar.pemesanan_id || "",
+        stok_obat_id: pengeluar.stok_obat_id || "",
         nama_tujuan: pengeluar.nama_tujuan || "",
         nama_barang: pengeluar.nama_barang || "",
         jumlah: pengeluar.jumlah || "",
@@ -33,27 +34,25 @@ export default function Edit({ auth, pengeluar, pemesanan }) {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Pilih Pemesanan
+                                    Pilih Stok Obat
                                 </label>
                                 <select
-                                    value={data.pemesanan_id}
+                                    value={data.stok_obat_id}
                                     onChange={(e) =>
-                                        setData("pemesanan_id", e.target.value)
+                                        setData("stok_obat_id", e.target.value)
                                     }
                                     className="w-full mt-1 border rounded px-3 py-2"
                                 >
-                                    <option value="">
-                                        -- Pilih Pemesanan --
-                                    </option>
-                                    {pemesanan.map((p) => (
-                                        <option key={p.id} value={p.id}>
-                                            {p.nama_barang} - Jumlah: {p.jumlah}
+                                    <option value="">-- Pilih Obat --</option>
+                                    {stokObat.map((obat) => (
+                                        <option key={obat.id} value={obat.id}>
+                                            {obat.penerima?.pengiriman?.pemesanan?.nama_barang} - Jumlah: {obat.jumlah}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.pemesanan_id && (
+                                {errors.stok_obat_id && (
                                     <p className="text-sm text-red-600">
-                                        {errors.pemesanan_id}
+                                        {errors.stok_obat_id}
                                     </p>
                                 )}
                             </div>
