@@ -12,12 +12,25 @@ use Inertia\Inertia;
 
 class PemesananController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pemesanan = Pemesanan::with('kontrak')->get();
+        $query = Pemesanan::with('kontrak');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+
+            $query->where('nama_barang', 'like', "%$search%")
+                ->orWhere('satuan', 'like', "%$search%")
+                ->orWhereHas('kontrak', function ($q) use ($search) {
+                    $q->where('no_id_paket', 'like', "%$search%");
+                });
+        }
+
+        $pemesanan = $query->get();
 
         return Inertia::render('Pemesanan/List', [
             'pemesanan' => $pemesanan,
+            'filters' => $request->only('search'),
             'auth' => [
                 'user' => Auth::user(),
             ],

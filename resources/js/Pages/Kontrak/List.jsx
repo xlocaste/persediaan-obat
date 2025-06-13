@@ -33,7 +33,7 @@ export default function List({ auth, kontrak, filters }) {
                                 <form onSubmit={handleSearch}>
                                     <input
                                         type="text"
-                                        placeholder="Cari nama perusahaan / manager..."
+                                        placeholder="Cari..."
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                         className="border rounded px-3 py-2 w-64"
