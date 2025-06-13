@@ -34,7 +34,7 @@ export default function Dashboard() {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-gradient-to-b from-indigo-700 via-indigo-500 to-indigo-400 text-white shadow-sm sm:rounded-lg">
+                    <div className="overflow-hidden bg-black/20 backdrop-blur-lg text-white shadow-sm sm:rounded-lg">
                         <div className="p-6">
                             <div className='flex justify-between'>
                                 <div className='bg-black/50 p-4 rounded-lg'>
