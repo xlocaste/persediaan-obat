@@ -112,8 +112,8 @@ Route::prefix('/pengeluar')->name('pengeluar.')->group(function () {
         Route::put('/{pengeluar}', [PengeluarController::class, 'update'])->name('update');
         Route::delete('/{pengeluar}', [PengeluarController::class, 'destroy'])->name('destroy');
         Route::get('/{pengeluar}/edit', [PengeluarController::class, 'edit'])->name('edit');
-        Route::get('/{pengeluar}', [PengeluarController::class, 'show'])->name('show');
         Route::get('/', [PengeluarController::class, 'index'])->name('index');
+        Route::get('/print', [PengeluarController::class, 'print'])->name('print');
     });
 });
 

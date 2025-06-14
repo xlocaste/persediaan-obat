@@ -9,7 +9,9 @@ use App\Models\StokObat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Inertia\Inertia;
+use Spatie\Browsershot\Browsershot;
 
 class PengeluarController extends Controller
 {
@@ -117,5 +119,28 @@ class PengeluarController extends Controller
 
         return redirect()->route('pengeluar.index')
             ->with('success', 'Data pengeluar berhasil dihapus dan stok dikembalikan.');
+    }
+
+    public function print()
+    {
+        $daftarPengeluar = Pengeluar::with('stokObat.penerima.pengiriman.pemesanan')->get();
+
+        $html = view('pdf.pengeluar', [
+            'daftarPengeluar' => $daftarPengeluar
+        ])->render();
+
+        $filename = 'pengeluar-' . now()->format('Ymd_His') . '.pdf';
+        $pdfPath = storage_path("app/public/{$filename}");
+
+        Browsershot::html($html)
+            ->waitUntilNetworkIdle()
+            ->format('A4')
+            ->margins(10, 10, 10, 10)
+            ->savePdf($pdfPath);
+
+        return response()->file($pdfPath, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$filename.'"',
+        ])->deleteFileAfterSend(true);
     }
 }

@@ -33,27 +33,36 @@ export default function List({ auth, daftarPengeluar, filters }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            {/* Search + Tambah */}
-                            <div className="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-                                <form onSubmit={handleSearch} className="flex gap-2 w-full sm:w-auto">
+                            <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4 items-center w-full">
+                                <form onSubmit={handleSearch} className="flex gap-2 w-full">
                                     <input
                                         type="text"
-                                        className="border rounded px-3 py-2 w-full sm:w-64"
+                                        className="border rounded px-3 py-2 w-full"
                                         placeholder="Cari nama barang atau tujuan..."
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                     />
                                     <button
                                         type="submit"
-                                        className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+                                        className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 shrink-0"
                                     >
                                         Cari
                                     </button>
                                 </form>
 
-                                <Link href={route("pengeluar.create")}>
-                                    <PrimaryButton>+ Tambah Pengeluar</PrimaryButton>
-                                </Link>
+                                <div className="flex justify-end items-center gap-2 w-full">
+                                    <a
+                                        href={route('pengeluar.print')}
+                                        target="_blank"
+                                        className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+                                    >
+                                        Print Semua
+                                    </a>
+
+                                    <Link href={route("pengeluar.create")}>
+                                        <PrimaryButton className="py-3">+ Tambah Pengeluar</PrimaryButton>
+                                    </Link>
+                                </div>
                             </div>
 
                             {/* Tabel Data */}
