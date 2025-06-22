@@ -18,7 +18,7 @@ export default function Welcome({ auth }) {
                 <div className="relative z-10 flex flex-col min-h-screen backdrop-blur-sm">
                     <main className="flex flex-col justify-center h-screen container mx-auto px-6 text-center items-center">
                         <h2 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-                            Selamat Datang di Sistem Informasi Stok Obat
+                            Selamat Datang di Sistem Persediaan Obat
                         </h2>
                         <p className="mb-8 text-[#f0fdfa] text-lg max-w-2xl mx-auto">
                             Aplikasi ini membantu mencatat, memantau, dan mengelola persediaan obat

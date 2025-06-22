@@ -13,8 +13,8 @@ export default function GuestLayout({ children }) {
                     <img src="/images/logo.png" alt="" width={180} className='absolute top-16'/>
                     <p className='text-white font-bold text-4xl'>SIPERO</p>
                     <p className='text-white font-light text-sm'>Sistem Persediaan Obat</p>
-                    <p className='absolute text-white bottom-10'>Dinas Kesehatan dan Keluarga Berencana Kota Singkawang</p>
-                    <p className='absolute text-white bottom-4 flex items-center'><FaMapMarkerAlt /> Jl. Alianyang, Pasiran, Kec. Singkawang Barat, Kota Singkawang – Kalimantan Barat 79123</p>
+                    <p className='absolute text-white bottom-14'>Dinas Kesehatan dan Keluarga Berencana Kota Singkawang</p>
+                    <p className='absolute text-white bottom-4 flex items-center text-center'><FaMapMarkerAlt /> Jl. Alianyang, Pasiran, Kec. Singkawang Barat, Kota Singkawang – Kalimantan Barat 79123</p>
                 </div>
             </div>
 
