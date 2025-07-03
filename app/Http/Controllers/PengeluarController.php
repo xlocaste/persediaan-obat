@@ -84,7 +84,7 @@ class PengeluarController extends Controller
     {
         return Inertia::render('Pengeluar/Update', [
             'pengeluar' => $pengeluar,
-            'stokObat' => StokObat::with('penerima.pengiriman.pemesanan')->get(),
+            'stokObat' => StokObat::with('penerima.pengiriman')->get(),
         ]);
     }
 
@@ -133,7 +133,7 @@ class PengeluarController extends Controller
 
     public function print()
     {
-        $daftarPengeluar = Pengeluar::with('stokObat.penerima.pengiriman.pemesanan')->get();
+        $daftarPengeluar = Pengeluar::with('stokObat.penerima.pengiriman')->get();
 
         $html = view('pdf.pengeluar', [
             'daftarPengeluar' => $daftarPengeluar

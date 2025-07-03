@@ -11,7 +11,7 @@ const menuItems = [
     { route: "penerima.index", label: "Penerima", icon: <FaUserCheck className="w-5 h-5 mr-2" /> },
     { route: "bukti-penerimaan.index", label: "Bukti Penerimaan", icon: <FaFileSignature className="w-5 h-5 mr-2" /> },
     { route: "pengeluar.index", label: "Pengeluar", icon: <FaUserMinus className="w-5 h-5 mr-2" /> },
-    { route: "stok-obat.index", label: "Stok Obat", icon: <FaPills className="w-5 h-5 mr-2" /> },
+    { route: "stok-obat.index", label: "Laporan Stok Obat", icon: <FaPills className="w-5 h-5 mr-2" /> },
 ];
 
 export default function AuthenticatedLayout({ header, children }) {
