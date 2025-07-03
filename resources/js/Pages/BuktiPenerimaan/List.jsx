@@ -6,6 +6,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function List({ auth, buktiPenerimaan, filters }) {
     const [search, setSearch] = useState(filters.search || '');
+    const isStaff = auth.user?.roles?.[0]?.name === 'staff';
 
     const handleDelete = (id) => {
         if (confirm('Yakin ingin menghapus bukti penerimaan ini?')) {
@@ -29,7 +30,6 @@ export default function List({ auth, buktiPenerimaan, filters }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            {/* Search and Create */}
                             <div className="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4">
                                 <form onSubmit={handleSearch} className="flex gap-2 w-full sm:w-auto">
                                     <input
@@ -47,12 +47,13 @@ export default function List({ auth, buktiPenerimaan, filters }) {
                                     </button>
                                 </form>
 
-                                <Link href={route('bukti-penerimaan.create')}>
-                                    <PrimaryButton>+ Tambah Bukti</PrimaryButton>
-                                </Link>
+                                {isStaff && (
+                                    <Link href={route('bukti-penerimaan.create')}>
+                                        <PrimaryButton>+ Tambah Bukti</PrimaryButton>
+                                    </Link>
+                                )}
                             </div>
 
-                            {/* Table */}
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -62,7 +63,9 @@ export default function List({ auth, buktiPenerimaan, filters }) {
                                         <th className="px-4 py-2 text-left">SPJ/BA-2</th>
                                         <th className="px-4 py-2 text-left">Realisasi</th>
                                         <th className="px-4 py-2 text-left">Keterangan</th>
-                                        <th className="px-4 py-2 text-center">Action</th>
+                                        {isStaff && (
+                                            <th className="px-4 py-2 text-center">Action</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -77,22 +80,24 @@ export default function List({ auth, buktiPenerimaan, filters }) {
                                                 <td className="px-4 py-2">{item.spj_ba2}</td>
                                                 <td className="px-4 py-2">{item.realisasi}</td>
                                                 <td className="px-4 py-2">{item.keterangan}</td>
-                                                <td className="px-4 py-2 text-center space-x-2 inline-flex">
-                                                    <Link
-                                                        href={route('bukti-penerimaan.edit', item.id)}
-                                                        className="text-indigo-600 hover:text-indigo-800"
-                                                        title="Edit"
-                                                    >
-                                                        <FaEdit />
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => handleDelete(item.id)}
-                                                        className="text-red-600 hover:text-red-800"
-                                                        title="Hapus"
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
+                                                {isStaff && (
+                                                    <td className="px-4 py-2 text-center space-x-2 inline-flex">
+                                                        <Link
+                                                            href={route('bukti-penerimaan.edit', item.id)}
+                                                            className="text-indigo-600 hover:text-indigo-800"
+                                                            title="Edit"
+                                                            >
+                                                            <FaEdit />
+                                                        </Link>
+                                                        <button
+                                                            onClick={() => handleDelete(item.id)}
+                                                            className="text-red-600 hover:text-red-800"
+                                                            title="Hapus"
+                                                            >
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                )}
                                             </tr>
                                         ))
                                     ) : (
