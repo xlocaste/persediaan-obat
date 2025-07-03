@@ -6,6 +6,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 
 export default function List({ auth, daftarPengeluar, filters }) {
     const [search, setSearch] = useState(filters.search || "");
+    const isStaff = auth.user?.roles?.[0]?.name === 'staff';
 
     const handleDelete = (id) => {
         if (confirm("Yakin ingin menghapus data pengeluar ini?")) {
@@ -59,13 +60,14 @@ export default function List({ auth, daftarPengeluar, filters }) {
                                         Print Semua
                                     </a>
 
-                                    <Link href={route("pengeluar.create")}>
-                                        <PrimaryButton className="py-3">+ Tambah Pengeluar</PrimaryButton>
-                                    </Link>
+                                    {isStaff && (
+                                        <Link href={route("pengeluar.create")}>
+                                            <PrimaryButton className="py-3">+ Tambah Pengeluar</PrimaryButton>
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
 
-                            {/* Tabel Data */}
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -73,7 +75,9 @@ export default function List({ auth, daftarPengeluar, filters }) {
                                         <th className="px-4 py-2 text-left">Nama Tujuan</th>
                                         <th className="px-4 py-2 text-left">Nama Barang</th>
                                         <th className="px-4 py-2 text-left">Jumlah</th>
-                                        <th className="px-4 py-2 text-center">Action</th>
+                                        {isStaff && (
+                                            <th className="px-4 py-2 text-center">Action</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -89,20 +93,22 @@ export default function List({ auth, daftarPengeluar, filters }) {
                                                 <td className="px-4 py-2">{item.nama_tujuan}</td>
                                                 <td className="px-4 py-2">{item.nama_barang}</td>
                                                 <td className="px-4 py-2">{item.jumlah}</td>
-                                                <td className="px-4 py-2 text-center space-x-2 inline-flex">
-                                                    <Link
-                                                        href={route("pengeluar.edit", item.id)}
-                                                        className="text-indigo-600 hover:underline"
-                                                    >
-                                                        <FaEdit />
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => handleDelete(item.id)}
-                                                        className="text-red-600 hover:underline"
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
+                                                {isStaff && (
+                                                    <td className="px-4 py-2 text-center space-x-2 inline-flex">
+                                                        <Link
+                                                            href={route("pengeluar.edit", item.id)}
+                                                            className="text-indigo-600 hover:underline"
+                                                            >
+                                                            <FaEdit />
+                                                        </Link>
+                                                        <button
+                                                            onClick={() => handleDelete(item.id)}
+                                                            className="text-red-600 hover:underline"
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                )}
                                             </tr>
                                         ))
                                     ) : (
