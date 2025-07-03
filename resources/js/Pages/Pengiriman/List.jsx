@@ -9,6 +9,7 @@ dayjs.locale('id');
 
 export default function List({ auth, pengiriman, filters }) {
     const [search, setSearch] = useState(filters.search || '');
+    const isStaff = auth.user?.roles?.[0]?.name === 'staff';
 
     const handleDelete = (id) => {
         if (confirm('Yakin ingin menghapus data pengiriman ini?')) {
@@ -51,9 +52,11 @@ export default function List({ auth, pengiriman, filters }) {
                                     </button>
                                 </form>
 
-                                <Link href={route('pengiriman.create')}>
-                                    <PrimaryButton>+ Tambah Pengiriman</PrimaryButton>
-                                </Link>
+                                {isStaff && (
+                                    <Link href={route('pengiriman.create')}>
+                                        <PrimaryButton>+ Tambah Pengiriman</PrimaryButton>
+                                    </Link>
+                                )}
                             </div>
 
                             {/* Table */}
@@ -65,7 +68,9 @@ export default function List({ auth, pengiriman, filters }) {
                                         <th className="px-4 py-2">Tanggal</th>
                                         <th className="px-4 py-2">Jumlah</th>
                                         <th className="px-4 py-2">Satuan</th>
-                                        <th className="px-4 py-2 text-center">Aksi</th>
+                                        {isStaff && (
+                                            <th className="px-4 py-2 text-center">Aksi</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -81,22 +86,24 @@ export default function List({ auth, pengiriman, filters }) {
                                                 </td>
                                                 <td className="px-4 py-2">{item.jumlah}</td>
                                                 <td className="px-4 py-2">{item.satuan}</td>
-                                                <td className="px-4 py-2 flex justify-center gap-2">
-                                                    <Link
-                                                        href={route('pengiriman.edit', item.id)}
-                                                        className="text-indigo-600 hover:text-indigo-800"
-                                                        title="Edit"
-                                                    >
-                                                        <FaEdit />
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => handleDelete(item.id)}
-                                                        className="text-red-600 hover:text-red-800"
-                                                        title="Hapus"
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
+                                                {isStaff && (
+                                                    <td className="px-4 py-2 flex justify-center gap-2">
+                                                        <Link
+                                                            href={route('pengiriman.edit', item.id)}
+                                                            className="text-indigo-600 hover:text-indigo-800"
+                                                            title="Edit"
+                                                        >
+                                                            <FaEdit />
+                                                        </Link>
+                                                        <button
+                                                            onClick={() => handleDelete(item.id)}
+                                                            className="text-red-600 hover:text-red-800"
+                                                            title="Hapus"
+                                                            >
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                )}
                                             </tr>
                                         ))
                                     ) : (
