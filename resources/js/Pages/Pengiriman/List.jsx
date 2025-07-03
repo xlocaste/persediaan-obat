@@ -34,7 +34,6 @@ export default function List({ auth, pengiriman, filters }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
 
-                            {/* Search dan Tambah */}
                             <div className="mb-4 flex flex-col sm:flex-row justify-between items-center gap-4">
                                 <form onSubmit={handleSearch} className="flex gap-2 w-full sm:w-auto">
                                     <input
@@ -59,7 +58,6 @@ export default function List({ auth, pengiriman, filters }) {
                                 )}
                             </div>
 
-                            {/* Table */}
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>

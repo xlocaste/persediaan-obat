@@ -6,6 +6,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function List({ auth, penerima, filters }) {
     const [search, setSearch] = useState(filters.search || '');
+    const isStaff = auth.user?.roles?.[0]?.name === 'staff';
 
     const handleDelete = (id) => {
         if (confirm('Yakin ingin menghapus data penerima ini?')) {
@@ -47,12 +48,13 @@ export default function List({ auth, penerima, filters }) {
                                     </button>
                                 </form>
 
-                                <Link href={route('penerima.create')}>
-                                    <PrimaryButton>+ Tambah Penerima</PrimaryButton>
-                                </Link>
+                                {isStaff && (
+                                    <Link href={route('penerima.create')}>
+                                        <PrimaryButton>+ Tambah Penerima</PrimaryButton>
+                                    </Link>
+                                )}
                             </div>
 
-                            {/* Table */}
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
@@ -60,7 +62,9 @@ export default function List({ auth, penerima, filters }) {
                                         <th className="px-4 py-2 text-left">Tanggal</th>
                                         <th className="px-4 py-2 text-left">Jumlah</th>
                                         <th className="px-4 py-2 text-left">Satuan</th>
-                                        <th className="px-4 py-2 text-center">Action</th>
+                                        {isStaff && (
+                                            <th className="px-4 py-2 text-center">Action</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -71,22 +75,24 @@ export default function List({ auth, penerima, filters }) {
                                                 <td className="px-4 py-2">{item.tanggal}</td>
                                                 <td className="px-4 py-2">{item.jumlah}</td>
                                                 <td className="px-4 py-2">{item.satuan}</td>
-                                                <td className="px-4 py-2 text-center space-x-2">
-                                                    <Link
-                                                        href={route('penerima.edit', item.id)}
-                                                        className="text-indigo-600 hover:text-indigo-800"
-                                                        title="Edit"
-                                                    >
-                                                        <FaEdit />
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => handleDelete(item.id)}
-                                                        className="text-red-600 hover:text-red-800"
-                                                        title="Hapus"
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
+                                                {isStaff && (
+                                                    <td className="px-4 py-2 text-center space-x-2">
+                                                        <Link
+                                                            href={route('penerima.edit', item.id)}
+                                                            className="text-indigo-600 hover:text-indigo-800"
+                                                            title="Edit"
+                                                            >
+                                                            <FaEdit />
+                                                        </Link>
+                                                        <button
+                                                            onClick={() => handleDelete(item.id)}
+                                                            className="text-red-600 hover:text-red-800"
+                                                            title="Hapus"
+                                                            >
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                )}
                                             </tr>
                                         ))
                                     ) : (
