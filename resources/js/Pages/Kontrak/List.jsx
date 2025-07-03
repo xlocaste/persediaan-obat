@@ -10,6 +10,7 @@ dayjs.locale('id');
 
 export default function List({ auth, kontrak, filters }) {
     const [search, setSearch] = useState(filters.search || '');
+    const isStaff = auth.user?.roles?.[0]?.name === 'staff';
 
     const handleDelete = (id) => {
         if (confirm('Yakin ingin menghapus kontrak ini?')) {
@@ -50,11 +51,13 @@ export default function List({ auth, kontrak, filters }) {
                                     </button>
                                 </form>
 
-                                <div className="mb-4 flex justify-end">
-                                    <Link href={route('kontrak.create')}>
-                                        <PrimaryButton>+ Tambah Kontrak</PrimaryButton>
-                                    </Link>
-                                </div>
+                                {isStaff && (
+                                    <div className="mb-4 flex justify-end">
+                                        <Link href={route('kontrak.create')}>
+                                            <PrimaryButton>+ Tambah Kontrak</PrimaryButton>
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Tabel Data */}
@@ -68,7 +71,9 @@ export default function List({ auth, kontrak, filters }) {
                                         <th className="px-4 py-2">Tanggal Mulai</th>
                                         <th className="px-4 py-2">Tanggal Berakhir</th>
                                         <th className="px-4 py-2">Masa Kontrak</th>
-                                        <th className="px-4 py-2 text-center">Aksi</th>
+                                        {isStaff && (
+                                            <th className="px-4 py-2 text-center">Aksi</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -85,22 +90,24 @@ export default function List({ auth, kontrak, filters }) {
                                             {item.tanggal_berakhir_kontrak ? dayjs(item.tanggal_berakhir_kontrak).format('D MMMM YYYY') : '-'}
                                             </td>
                                             <td className="px-4 py-2">{item.masa_kontrak}</td>
-                                            <td className="px-4 py-2 flex justify-center gap-2">
-                                                <Link
-                                                    href={route('kontrak.edit', item.id)}
-                                                    className="text-indigo-600 hover:text-indigo-800"
-                                                    title="Edit"
-                                                >
-                                                    <FaEdit />
-                                                </Link>
-                                                <button
-                                                    onClick={() => handleDelete(item.id)}
-                                                    className="text-red-600 hover:text-red-800"
-                                                    title="Hapus"
-                                                >
-                                                    <FaTrash />
-                                                </button>
-                                            </td>
+                                            {isStaff && (
+                                                <td className="px-4 py-2 flex justify-center gap-2">
+                                                    <Link
+                                                        href={route('kontrak.edit', item.id)}
+                                                        className="text-indigo-600 hover:text-indigo-800"
+                                                        title="Edit"
+                                                        >
+                                                        <FaEdit />
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => handleDelete(item.id)}
+                                                        className="text-red-600 hover:text-red-800"
+                                                        title="Hapus"
+                                                        >
+                                                        <FaTrash />
+                                                    </button>
+                                                </td>
+                                            )}
                                         </tr>
                                     ))}
                                     {kontrak.length === 0 && (
