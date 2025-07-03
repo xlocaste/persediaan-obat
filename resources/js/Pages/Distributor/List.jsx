@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function List({ auth, distributor, filters }) {
+    console.log(auth)
     const [search, setSearch] = useState(filters?.search || '');
 
     const handleDelete = (id) => {
