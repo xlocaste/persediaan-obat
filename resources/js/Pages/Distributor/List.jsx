@@ -7,6 +7,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 export default function List({ auth, distributor, filters }) {
     console.log(auth)
     const [search, setSearch] = useState(filters?.search || '');
+    const isStaff = auth.user?.roles?.[0]?.name === 'staff';
 
     const handleDelete = (id) => {
         if (confirm('Yakin ingin menghapus distributor ini?')) {
@@ -47,9 +48,11 @@ export default function List({ auth, distributor, filters }) {
                                     </button>
                                 </form>
 
-                                <Link href={route('distributor.create')}>
-                                    <PrimaryButton>+ Tambah Distributor</PrimaryButton>
-                                </Link>
+                                {isStaff && (
+                                    <Link href={route('distributor.create')}>
+                                        <PrimaryButton>+ Tambah Distributor</PrimaryButton>
+                                    </Link>
+                                )}
                             </div>
 
                             <table className="min-w-full divide-y divide-gray-200 border">
@@ -60,7 +63,9 @@ export default function List({ auth, distributor, filters }) {
                                         <th className="px-4 py-2">Alamat</th>
                                         <th className="px-4 py-2">No Rekening</th>
                                         <th className="px-4 py-2">NPWP</th>
-                                        <th className="px-4 py-2">Action</th>
+                                        {isStaff && (
+                                            <th className="px-4 py-2">Action</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -71,20 +76,22 @@ export default function List({ auth, distributor, filters }) {
                                             <td className="px-4 py-2">{item.alamat}</td>
                                             <td className="px-4 py-2">{item.no_rek}</td>
                                             <td className="px-4 py-2">{item.npwp}</td>
-                                            <td className="px-4 py-2 space-x-2 inline-flex">
-                                                <Link
-                                                    href={route('distributor.edit', item.id)}
-                                                    className="text-indigo-600 hover:underline"
-                                                >
-                                                    <FaEdit />
-                                                </Link>
-                                                <button
-                                                    onClick={() => handleDelete(item.id)}
-                                                    className="text-red-600 hover:underline"
-                                                >
-                                                    <FaTrash />
-                                                </button>
-                                            </td>
+                                            {isStaff && (
+                                                <td className="px-4 py-2 space-x-2 inline-flex">
+                                                    <Link
+                                                        href={route('distributor.edit', item.id)}
+                                                        className="text-indigo-600 hover:underline"
+                                                    >
+                                                        <FaEdit />
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => handleDelete(item.id)}
+                                                        className="text-red-600 hover:underline"
+                                                    >
+                                                        <FaTrash />
+                                                    </button>
+                                                </td>
+                                            )}
                                         </tr>
                                     ))}
                                     {distributor.length === 0 && (
