@@ -58,6 +58,7 @@ export default function List({ auth, buktiPenerimaan, filters }) {
                                 <thead className="bg-gray-50">
                                     <tr>
                                         <th className="px-4 py-2 text-left">No Faktur (Penerima)</th>
+                                        <th className="px-4 py-2 text-left">Nama Barang</th>
                                         <th className="px-4 py-2 text-left">Gambar</th>
                                         <th className="px-4 py-2 text-left">SP</th>
                                         <th className="px-4 py-2 text-left">SPJ/BA-2</th>
@@ -73,6 +74,7 @@ export default function List({ auth, buktiPenerimaan, filters }) {
                                         buktiPenerimaan.map((item) => (
                                             <tr key={item.id} className="hover:bg-gray-50">
                                                 <td className="px-4 py-2">{item.penerima?.pengiriman?.no_faktur || '-'}</td>
+                                                <td className="px-4 py-2">{item.penerima?.pengiriman?.nama_barang || '-'}</td>
                                                 <td className="px-4 py-2">
                                                     <img src={`/storage/${item.image}`} alt="Bukti" className="h-12" />
                                                 </td>

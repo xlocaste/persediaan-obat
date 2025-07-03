@@ -14,7 +14,7 @@ class PenerimaController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Penerima::with('pengiriman.pemesanan.kontrak');
+        $query = Penerima::with('pengiriman.kontrak');
 
         if ($request->has('search')) {
             $search = $request->search;

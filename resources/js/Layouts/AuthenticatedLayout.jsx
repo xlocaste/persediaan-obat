@@ -7,7 +7,6 @@ import { FaFileContract, FaClipboardList, FaTruck, FaUserCheck, FaFileSignature,
 const menuItems = [
     { route: "distributor.index", label: "Distributor", icon: <HiMiniBuildingOffice2 className="w-5 h-5 mr-2" /> },
     { route: "kontrak.index", label: "Kontrak", icon: <FaFileContract className="w-5 h-5 mr-2" /> },
-    { route: "pemesanan.index", label: "Pemesanan", icon: <FaClipboardList className="w-5 h-5 mr-2" /> },
     { route: "pengiriman.index", label: "Pengiriman", icon: <FaTruck className="w-5 h-5 mr-2" /> },
     { route: "penerima.index", label: "Penerima", icon: <FaUserCheck className="w-5 h-5 mr-2" /> },
     { route: "bukti-penerimaan.index", label: "Bukti Penerimaan", icon: <FaFileSignature className="w-5 h-5 mr-2" /> },

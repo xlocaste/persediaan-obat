@@ -15,7 +15,7 @@ class BuktiPenerimaanController extends Controller
 {
     public function index(Request $request)
     {
-        $query = BuktiPenerimaan::with('penerima.pengiriman.pemesanan.kontrak');
+        $query = BuktiPenerimaan::with('penerima.pengiriman.kontrak');
 
         if ($request->has('search')) {
             $search = $request->search;

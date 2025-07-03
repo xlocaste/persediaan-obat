@@ -11,14 +11,14 @@ class StokObatController extends Controller
 {
     public function index(Request $request)
     {
-        $query = StokObat::with('penerima.pengiriman.pemesanan.kontrak');
+        $query = StokObat::with('penerima.pengiriman.kontrak');
 
         if ($request->has('search')) {
             $search = $request->search;
 
             $query->where('tanggal', 'like', "%$search%")
                 ->orWhere('satuan', 'like', "%$search%")
-                ->orWhereHas('penerima.pengiriman.pemesanan', function ($q) use ($search) {
+                ->orWhereHas('penerima.pengiriman', function ($q) use ($search) {
                     $q->where('nama_barang', 'like', "%$search%");
                 });
         }

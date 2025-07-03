@@ -64,7 +64,7 @@ export default function List({ auth, stokObat, filters }) {
                                         stokObat.map((item) => (
                                             <tr key={item.id} className="hover:bg-gray-50">
                                                 <td className="px-4 py-2">
-                                                    {item.penerima?.pengiriman?.pemesanan?.nama_barang || "-"}
+                                                    {item.penerima?.pengiriman?.nama_barang || "-"}
                                                 </td>
                                                 <td className="px-4 py-2">
                                                     {item.tanggal ? dayjs(item.tanggal).format('D MMMM YYYY') : '-'}

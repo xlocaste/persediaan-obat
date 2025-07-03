@@ -59,6 +59,7 @@ export default function List({ auth, penerima, filters }) {
                                 <thead className="bg-gray-50">
                                     <tr>
                                         <th className="px-4 py-2 text-left">No Faktur (Pengiriman)</th>
+                                        <th className="px-4 py-2 text-left">Nama Barang</th>
                                         <th className="px-4 py-2 text-left">Tanggal</th>
                                         <th className="px-4 py-2 text-left">Jumlah</th>
                                         <th className="px-4 py-2 text-left">Satuan</th>
@@ -72,6 +73,7 @@ export default function List({ auth, penerima, filters }) {
                                         penerima.map((item) => (
                                             <tr key={item.id} className="hover:bg-gray-50">
                                                 <td className="px-4 py-2">{item.pengiriman?.no_faktur || '-'}</td>
+                                                <td className="px-4 py-2">{item.pengiriman?.nama_barang || '-'}</td>
                                                 <td className="px-4 py-2">{item.tanggal}</td>
                                                 <td className="px-4 py-2">{item.jumlah}</td>
                                                 <td className="px-4 py-2">{item.satuan}</td>

@@ -42,7 +42,7 @@ export default function Update({ auth, penerima, pengiriman }) {
                                     <option value="">-- Pilih Pengiriman --</option>
                                     {pengiriman.map((item) => (
                                         <option key={item.id} value={item.id}>
-                                            {item.no_faktur} - {item.tanggal}
+                                            {item.nama_barang} - {item.no_faktur} - {item.tanggal}
                                         </option>
                                     ))}
                                 </select>

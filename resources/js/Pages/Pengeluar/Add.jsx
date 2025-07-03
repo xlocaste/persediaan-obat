@@ -1,6 +1,6 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Add({ auth, stokObat }) {
@@ -11,6 +11,8 @@ export default function Add({ auth, stokObat }) {
         nama_barang: "",
         jumlah: "",
     });
+
+    const { flash = {} } = usePage().props;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -33,6 +35,17 @@ export default function Add({ auth, stokObat }) {
             <div className="py-6">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white p-6 shadow-sm sm:rounded-lg">
+                        {flash.error && (
+                            <div className="mb-4 rounded bg-red-100 border border-red-300 text-red-700 p-3">
+                                {flash.error}
+                            </div>
+                        )}
+
+                        {flash.success && (
+                            <div className="mb-4 rounded bg-green-100 border border-green-300 text-green-700 p-3">
+                                {flash.success}
+                            </div>
+                        )}
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">

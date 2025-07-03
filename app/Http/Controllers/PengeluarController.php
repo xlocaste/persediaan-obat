@@ -17,14 +17,14 @@ class PengeluarController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pengeluar::with('stokObat.penerima.pengiriman.pemesanan');
+        $query = Pengeluar::with('stokObat.penerima.pengiriman');
 
         if ($request->has('search')) {
             $search = $request->search;
 
             $query->where('nama_barang', 'like', "%$search%")
                 ->orWhere('nama_tujuan', 'like', "%$search%")
-                ->orWhereHas('stokObat.penerima.pengiriman.pemesanan', function ($q) use ($search) {
+                ->orWhereHas('stokObat.penerima.pengiriman', function ($q) use ($search) {
                     $q->where('nama_barang', 'like', "%$search%");
                 });
         }
@@ -49,13 +49,21 @@ class PengeluarController extends Controller
 
     public function store(StoreRequest $request)
     {
-        DB::transaction(function () use ($request) {
-            $stokObat = StokObat::findOrFail($request->stok_obat_id);
+        $stokObat = StokObat::find($request->stok_obat_id);
 
-            if ($stokObat->jumlah < $request->jumlah) {
-                throw new \Exception('Stok tidak mencukupi untuk pengeluaran ini.');
-            }
+        if (!$stokObat) {
+            return redirect()->back()
+                ->with('error', 'Stok obat tidak ditemukan.')
+                ->withInput();
+        }
 
+        if ($stokObat->jumlah < $request->jumlah) {
+            return redirect()->back()
+                ->with('error', 'Stok tidak mencukupi untuk pengeluaran ini.')
+                ->withInput();
+        }
+
+        DB::transaction(function () use ($stokObat, $request) {
             $stokObat->jumlah -= $request->jumlah;
             $stokObat->save();
 
@@ -67,8 +75,10 @@ class PengeluarController extends Controller
             ]);
         });
 
-        return redirect()->route('pengeluar.index');
+        return redirect()->route('pengeluar.index')
+            ->with('success', 'Pengeluaran berhasil disimpan.');
     }
+
 
     public function edit(Pengeluar $pengeluar)
     {

@@ -71,7 +71,7 @@ export default function List({ auth, daftarPengeluar, filters }) {
                             <table className="min-w-full divide-y divide-gray-200 border">
                                 <thead className="bg-gray-50">
                                     <tr>
-                                        <th className="px-4 py-2 text-left">Pemesanan</th>
+                                        <th className="px-4 py-2 text-left">Nama Barang</th>
                                         <th className="px-4 py-2 text-left">Nama Tujuan</th>
                                         <th className="px-4 py-2 text-left">Nama Barang</th>
                                         <th className="px-4 py-2 text-left">Jumlah</th>
@@ -86,8 +86,7 @@ export default function List({ auth, daftarPengeluar, filters }) {
                                             <tr key={item.id} className="hover:bg-gray-50">
                                                 <td className="px-4 py-2">
                                                     {
-                                                        item.stok_obat?.penerima?.pengiriman?.pemesanan
-                                                            ?.nama_barang || "-"
+                                                        item.stok_obat?.penerima?.pengiriman?.nama_barang || "-"
                                                     }
                                                 </td>
                                                 <td className="px-4 py-2">{item.nama_tujuan}</td>
