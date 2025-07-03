@@ -22,8 +22,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pemesanan_id' => 'required|exists:pemesanan,id',
+            'kontrak_id' => 'required|exists:kontrak,id',
             'tanggal' => 'required|date',
+            'nama_barang' => 'required|string|max:255',
             'no_faktur' => 'required|string|max:255',
             'jumlah' => 'required|integer|min:1',
             'satuan' => 'required|string|max:100',
@@ -33,8 +34,8 @@ class UpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'pemesanan_id.required' => 'Pemesanan wajib dipilih.',
-            'pemesanan_id.exists' => 'Pemesanan yang dipilih tidak valid.',
+            'kontrak_id.required' => 'Kontrak wajib dipilih.',
+            'kontrak_id.exists' => 'kontrak yang dipilih tidak valid.',
             'tanggal.required' => 'Tanggal pengiriman wajib diisi.',
             'tanggal.date' => 'Format tanggal pengiriman tidak valid.',
             'no_faktur.required' => 'No Faktur wajib diisi.',

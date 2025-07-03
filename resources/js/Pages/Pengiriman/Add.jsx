@@ -3,10 +3,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 
-export default function Add({ auth, pemesanan }) {
+export default function Add({ auth, kontrak }) {
     const { data, setData, post, processing, errors } = useForm({
-        pemesanan_id: '',
+        kontrak_id: '',
         tanggal: '',
+        nama_barang: '',
         no_faktur: '',
         jumlah: '',
         satuan: '',
@@ -29,21 +30,21 @@ export default function Add({ auth, pemesanan }) {
                     <div className="bg-white shadow-sm sm:rounded-lg p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Pilih Pemesanan</label>
+                                <label className="block text-sm font-medium text-gray-700">Pilih kontrak</label>
                                 <select
-                                    value={data.pemesanan_id}
-                                    onChange={(e) => setData('pemesanan_id', e.target.value)}
+                                    value={data.kontrak_id}
+                                    onChange={(e) => setData('kontrak_id', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 >
-                                    <option value="">-- Pilih Pemesanan --</option>
-                                    {pemesanan.map((item) => (
+                                    <option value="">-- Pilih Kontrak --</option>
+                                    {kontrak.map((item) => (
                                         <option key={item.id} value={item.id}>
-                                            {item.nama_barang} ({item.jumlah} {item.satuan})
+                                            {item.distributor.nama_perusahaan} ({item.nama_penyedia} {item.no_tanggal_kontrak})
                                         </option>
                                     ))}
                                 </select>
-                                {errors.pemesanan_id && (
-                                    <p className="text-sm text-red-600">{errors.pemesanan_id}</p>
+                                {errors.kontrak_id && (
+                                    <p className="text-sm text-red-600">{errors.kontrak_id}</p>
                                 )}
                             </div>
 
@@ -57,6 +58,19 @@ export default function Add({ auth, pemesanan }) {
                                 />
                                 {errors.tanggal && (
                                     <p className="text-sm text-red-600">{errors.tanggal}</p>
+                                )}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Nama Barang</label>
+                                <input
+                                    type="text"
+                                    value={data.nama_barang}
+                                    onChange={(e) => setData('nama_barang', e.target.value)}
+                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                />
+                                {errors.nama_barang && (
+                                    <p className="text-sm text-red-600">{errors.nama_barang}</p>
                                 )}
                             </div>
 

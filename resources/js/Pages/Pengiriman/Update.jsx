@@ -2,10 +2,11 @@ import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 
-export default function Update({ auth, pengiriman, pemesanan }) {
+export default function Update({ auth, pengiriman, kontrak }) {
     const { data, setData, put, processing, errors } = useForm({
-        pemesanan_id: pengiriman.pemesanan_id || '',
+        kontrak_id: pengiriman.kontrak_id || '',
         tanggal: pengiriman.tanggal || '',
+        nama_barang: pengiriman.nama_barang || '',
         no_faktur: pengiriman.no_faktur || '',
         jumlah: pengiriman.jumlah || '',
         satuan: pengiriman.satuan || '',
@@ -29,20 +30,20 @@ export default function Update({ auth, pengiriman, pemesanan }) {
                         <form onSubmit={handleSubmit} className="space-y-6">
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Pilih Pemesanan</label>
+                                <label className="block text-sm font-medium text-gray-700">Pilih kontrak</label>
                                 <select
-                                    value={data.pemesanan_id}
-                                    onChange={(e) => setData('pemesanan_id', e.target.value)}
+                                    value={data.kontrak_id}
+                                    onChange={(e) => setData('kontrak_id', e.target.value)}
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 >
-                                    <option value="">-- Pilih Pemesanan --</option>
-                                    {pemesanan.map(p => (
+                                    <option value="">-- Pilih Kontrak --</option>
+                                    {kontrak.map(p => (
                                         <option key={p.id} value={p.id}>
-                                            {p.nama_barang} ({p.jumlah} {p.satuan})
+                                            {p.distributor.nama_perusahaan} ({p.nama_penyedia} {p.no_tanggal_kontrak})
                                         </option>
                                     ))}
                                 </select>
-                                {errors.pemesanan_id && <p className="text-sm text-red-600">{errors.pemesanan_id}</p>}
+                                {errors.kontrak_id && <p className="text-sm text-red-600">{errors.kontrak_id}</p>}
                             </div>
 
                             <div>
@@ -54,6 +55,17 @@ export default function Update({ auth, pengiriman, pemesanan }) {
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 />
                                 {errors.tanggal && <p className="text-sm text-red-600">{errors.tanggal}</p>}
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Nama Barang</label>
+                                <input
+                                    type="text"
+                                    value={data.nama_barang}
+                                    onChange={(e) => setData('nama_barang', e.target.value)}
+                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                />
+                                {errors.nama_barang && <p className="text-sm text-red-600">{errors.nama_barang}</p>}
                             </div>
 
                             <div>

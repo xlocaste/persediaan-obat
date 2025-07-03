@@ -12,15 +12,16 @@ class Pengiriman extends Model
     protected $table = 'pengiriman';
 
     protected $fillable = [
-        'pemesanan_id',
+        'kontrak_id',
         'tanggal',
         'no_faktur',
+        'nama_barang',
         'jumlah',
         'satuan',
     ];
 
-    public function pemesanan()
+    public function kontrak()
     {
-        return $this->belongsTo(Pemesanan::class);
+        return $this->belongsTo(Kontrak::class);
     }
 }

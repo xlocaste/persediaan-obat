@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Pengiriman\StoreRequest;
 use App\Http\Requests\Pengiriman\UpdateRequest;
-use App\Models\Pemesanan;
+use App\Models\Kontrak;
 use App\Models\Pengiriman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +14,7 @@ class PengirimanController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pengiriman::with('pemesanan.kontrak');
+        $query = Pengiriman::with('kontrak');
 
         if ($request->has('search')) {
             $search = $request->search;
@@ -40,9 +40,10 @@ class PengirimanController extends Controller
     public function store(StoreRequest $request)
     {
         Pengiriman::create([
-            'pemesanan_id' => $request->pemesanan_id,
+            'kontrak_id' => $request->kontrak_id,
             'tanggal' => $request->tanggal,
             'no_faktur' => $request->no_faktur,
+            'nama_barang' => $request->nama_barang,
             'jumlah' => $request->jumlah,
             'satuan' => $request->satuan,
         ]);
@@ -53,9 +54,10 @@ class PengirimanController extends Controller
     public function update(UpdateRequest $request, Pengiriman $pengiriman)
     {
         $pengiriman->update([
-            'pemesanan_id' => $request->pemesanan_id,
+            'kontrak_id' => $request->kontrak_id,
             'tanggal' => $request->tanggal,
             'no_faktur' => $request->no_faktur,
+            'nama_barang' => $request->nama_barang,
             'jumlah' => $request->jumlah,
             'satuan' => $request->satuan,
         ]);
@@ -74,14 +76,14 @@ class PengirimanController extends Controller
     {
         return Inertia::render('Pengiriman/Update', [
             'pengiriman' => $pengiriman,
-            'pemesanan' => Pemesanan::all(),
+            'kontrak' => Kontrak::with('distributor')->get(),
         ]);
     }
 
     public function create()
     {
         return Inertia::render('Pengiriman/Add', [
-            'pemesanan' => Pemesanan::all(),
+            'kontrak' => Kontrak::with('distributor')->get(),
         ]);
     }
 }

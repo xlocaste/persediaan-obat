@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('pengiriman', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pemesanan_id');
+            $table->unsignedBigInteger('kontrak_id');
             $table->date('tanggal');
+            $table->string('nama_barang');
             $table->string('no_faktur');
             $table->integer('jumlah');
             $table->string('satuan');
             $table->timestamps();
 
-            $table->foreign('pemesanan_id')->references('id')->on('pemesanan');
+            $table->foreign('kontrak_id')->references('id')->on('kontrak');
         });
     }
 
